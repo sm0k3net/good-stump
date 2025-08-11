@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Пенёк — лесные истории для детей</title>
+  <meta name="description" content="Пенёк и его друзья приглашают в тёплый мир лесных историй. Читайте книги, смотрите иллюстрации, скачивайте раскраски и узнавайте больше о героях." />
+  <meta name="theme-color" content="#2f7a5c" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Пенёк — лесные истории для детей" />
+  <meta property="og:description" content="Добрый мир приключений Пенька: книги, картинки, раскраски и забота о лесу." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com/" />
+  <meta property="og:image" content="assets/og-cover.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Мобильная шапка -->
+    <header class="topbar" aria-label="Верхняя панель">
+      <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand">
+        <img src="assets/hero-wave.png" alt="Пенёк машет вам" class="brand-logo" />
+        <span class="brand-title">Пенёк</span>
+      </div>
+    </header>
+
+    <!-- Сайдбар -->
+    <aside class="sidebar" id="sidebar" aria-label="Навигация по сайту">
+      <div class="logo-block">
+        <img src="assets/hero-wave.png" alt="Пенёк приветствует читателей" class="hero-logo" />
+        <p class="hello">Привет! Я Пенёк — пойдём со мной в лес за историями.</p>
+      </div>
+
+      <nav class="nav" role="navigation">
+        <ul>
+          <li><a class="nav-link" href="#about" data-section="about">Про Пенька</a></li>
+          <li><a class="nav-link" href="#books" data-section="books">Наши Книги</a></li>
+          <li><a class="nav-link" href="#gallery" data-section="gallery">Картинки</a></li>
+          <li><a class="nav-link" href="#coloring" data-section="coloring">Раскраски</a></li>
+          <li><a class="nav-link" href="#about-us" data-section="about-us">О Нас</a></li>
+          <li><a class="nav-link" href="#contacts" data-section="contacts">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <div class="share" aria-label="Поделиться">
+        <div class="share-title">Поделиться</div>
+        <div class="share-row">
+          <button class="btn-share vk" data-network="vk" aria-label="Поделиться ВКонтакте" title="ВКонтакте">
+            <!-- VK SVG -->
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 7.3c.1-.4 0-.7-.6-.7h-2a.9.9 0 0 0-.8.5S17.6 9.1 16 11c-.5.5-.7.7-1 .7-.1 0-.3-.2-.3-.6V6.6c0-.5-.1-.6-.5-.6h-3.1c-.3 0-.5.1-.5.4 0 .5.7.6.7 2.1v3.2c0 .7-.1.8-.3.8-.7 0-2.3-2.4-3.3-5.1-.2-.5-.4-.7-.8-.7H1.9c-.5 0-.6.2-.6.5 0 .5.7 3 3.3 6.3 1.7 2.3 4.1 3.6 6.3 3.6 1.3 0 1.5-.3 1.5-.7v-1.6c0-.4.1-.6.4-.6.2 0 .5.1 1.4.9 1 .9 1.2 1.3 1.8 1.3h2c.6 0 .9-.3.7-.9-.2-.6-1-1.4-2-2.4-.5-.5-1.3-1.1-1.5-1.4-.2-.3-.1-.5 0-.7 0 0 2.7-3.8 3-5.1Z"/></svg>
+          </button>
+          <button class="btn-share fb" data-network="facebook" aria-label="Поделиться в Facebook" title="Facebook">
+            <!-- FB SVG -->
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3h-3.1V8.6c0-.9.2-1.6 1.6-1.6h1.7V4.3c-.3 0-1.3-.1-2.5-.1C12 4.2 10.5 5.5 10.5 8v3H8v3h2.5v8h3Z"/></svg>
+          </button>
+          <button class="btn-share tg" data-network="telegram" aria-label="Поделиться в Telegram" title="Telegram">
+            <!-- TG SVG -->
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.1 16.8c-.4 0-.3-.2-.4-.5l-1-3.3 7.8-4.6c.4-.2.7 0 .5.4l-1.3 8c-.1.4-.3.5-.7.3l-2-1.5-1 1c-.1.2-.2.3-.5.2Z"/></svg>
+          </button>
+          <div class="share-more">
+            <button class="btn-more" id="shareMore" aria-haspopup="true" aria-expanded="false" aria-label="Другие соцсети" title="Ещё">
+              +
+            </button>
+            <div class="share-popover" id="sharePopover" role="dialog" aria-label="Дополнительные соцсети">
+              <button class="btn-share ok" data-network="ok" title="Одноклассники" aria-label="Поделиться в Одноклассники">OK</button>
+              <button class="btn-share mailru" data-network="mailru" title="Mail.ru" aria-label="Поделиться в Mail.ru">@</button>
+              <button class="btn-share tw" data-network="twitter" title="Twitter" aria-label="Поделиться в Twitter">X</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-share-native" id="shareNative" aria-label="Поделиться">Поделиться на устройстве</button>
+      </div>
+      <div class="sidebar-fade" aria-hidden="true"></div>
+    </aside>
+
+    <!-- Контент -->
+    <main class="content">
+      <!-- Декоративная панель -->
+      <section class="hero-panel" aria-hidden="true">
+        <div class="leaves decor"></div>
+        <div class="acorns decor"></div>
+      </section>
+
+      <section id="about" class="section">
+        <h1>Про Пенька</h1>
+        <p>
+          Пенёк — это тёплый и любознательный герой, который умеет видеть в каждом дне маленькое чудо. 
+          Он носит синюю кепку и оранжевый худи, на макушке у него растёт зелёный росток — символ доброты и роста.
+        </p>
+        <p>
+          Вместе с белочкой, енотом и другими лесными друзьями он учится дружбе, взаимопомощи и заботе о природе. 
+          Каждая история — это приключение, в котором есть место смеху, открытиям и сердечной поддержке.
+        </p>
+        <ul class="pill-list">
+          <li>Дружба и эмпатия</li>
+          <li>Забота о лесах</li>
+          <li>Смелость исследовать</li>
+          <li>Юмор и тёплые диалоги</li>
+        </ul>
+        <figure class="feature">
+          <img src="assets/scene-walk.png" alt="Пенёк идёт по лесной тропинке" style="width:auto;height:350px;" loading="lazy"/>
+          <figcaption>Уютные тропинки, шуршание листьев и добрые встречи — там, где живёт Пенёк.</figcaption>
+        </figure>
+      </section>
+
+      <section id="books" class="section">
+        <h2>Наши Книги</h2>
+        <p>Откройте серию добрых историй. Эти книги легко читать вслух и рассматривать вместе с детьми.</p>
+        <div class="cards">
+          <article class="card">
+            <img src="assets/book-1.jpg" alt="Обложка книги «Пенёк и домик у тропинки»" loading="lazy" />
+            <div class="card-body">
+              <h3>Пенёк и домик у тропинки</h3>
+              <p>Пенёк строит настоящий, гостеприимный домик, где есть место каждому другу. Вместе они учатся делиться и помогать.</p>
+              <div class="tags"><span>3–7 лет</span><span>Дружба</span><span>Дом</span></div>
+              <div class="actions">
+                <a class="btn primary" href="#contacts">Купить</a>
+                <a class="btn ghost" href="#gallery">Смотреть иллюстрации</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="assets/book-2.jpg" alt="Обложка книги «Тропинка к ягодной поляне»" loading="lazy" />
+            <div class="card-body">
+              <h3>Тропинка к ягодной поляне</h3>
+              <p>По дороге к поляне Пенёк встречает белочку и медведя, узнаёт, как важно делиться и беречь лесные богатства.</p>
+              <div class="tags"><span>4–8 лет</span><span>Природа</span><span>Доброта</span></div>
+              <div class="actions">
+                <a class="btn primary" href="#contacts">Купить</a>
+                <a class="btn ghost" href="#gallery">Смотреть иллюстрации</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="assets/book-3.jpg" alt="Обложка книги «Чистая тропинка»" loading="lazy" />
+            <div class="card-body">
+              <h3>Чистая тропинка</h3>
+              <p>Пенёк и друзья находят мусор в лесу и вместе превращают заботу о природе в увлекательную игру.</p>
+              <div class="tags"><span>3–7 лет</span><span>Экология</span><span>Команда</span></div>
+              <div class="actions">
+                <a class="btn primary" href="#contacts">Купить</a>
+                <a class="btn ghost" href="#gallery">Смотреть иллюстрации</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="gallery" class="section">
+        <h2>Картинки</h2>
+        <p>Иллюстрации, полные света, деталей и тихих смешков лесных друзей.</p>
+        <div class="gallery">
+          <a class="thumb" href="assets/gallery-1.jpg" data-caption="Пенёк машет читателям у своего домика.">
+            <img src="assets/gallery-1-thumb.jpg" alt="Пенёк у домика" loading="lazy" />
+          </a>
+          <a class="thumb" href="assets/gallery-2.jpg" data-caption="Дорога через лес, белочка машет с ветки.">
+            <img src="assets/gallery-2-thumb.jpg" alt="Пенёк идёт по лесу" loading="lazy" />
+          </a>
+          <a class="thumb" href="assets/gallery-3.jpg" data-caption="Медведь собирает ягоды у куста.">
+            <img src="assets/gallery-3-thumb.jpg" alt="Медведь собирает ягоды" loading="lazy" />
+          </a>
+          <a class="thumb" href="assets/gallery-4.jpg" data-caption="Чистая тропинка после уборки.">
+            <img src="assets/gallery-4-thumb.jpg" alt="Чистая тропинка" loading="lazy" />
+          </a>
+        </div>
+      </section>
+
+      <section id="coloring" class="section">
+        <h2>Раскраски</h2>
+        <p>Скачивайте и раскрашивайте вместе. Каждая раскраска — повод для разговора о доброте и природе.</p>
+        <div class="downloads">
+          <article class="dl">
+            <h3>Пенёк приветствует</h3>
+            <p>Контурный рисунок героя с кепкой и ростком.</p>
+            <a class="btn primary" href="assets/coloring-stump-wave.pdf" download>Скачать PDF</a>
+            <a class="btn ghost" href="assets/coloring-stump-wave.pdf" target="_blank" rel="noopener">Открыть</a>
+          </article>
+          <article class="dl">
+            <h3>Дорога через лес</h3>
+            <p>Пенёк идёт по тропинке, белочка машет с ветки.</p>
+            <a class="btn primary" href="assets/coloring-forest-path.pdf" download>Скачать PDF</a>
+            <a class="btn ghost" href="assets/coloring-forest-path.pdf" target="_blank" rel="noopener">Открыть</a>
+          </article>
+          <article class="dl">
+            <h3>Чистая тропинка</h3>
+            <p>Учимся бережно относиться к лесу и помогать друзьям.</p>
+            <a class="btn primary" href="assets/coloring-clean-path.pdf" download>Скачать PDF</a>
+            <a class="btn ghost" href="assets/coloring-clean-path.pdf" target="_blank" rel="noopener">Открыть</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="about-us" class="section">
+        <h2>О Нас</h2>
+        <div class="team">
+          <article class="person">
+            <img src="assets/author.jpg" alt="Автор серии" loading="lazy" />
+            <h3>Автор</h3>
+            <p>Придумывает истории, в которых звучат добрые разговоры, шутки и важные вопросы о дружбе.</p>
+          </article>
+          <article class="person">
+            <img src="assets/illustrator.jpg" alt="Иллюстратор" loading="lazy" />
+            <h3>Иллюстратор</h3>
+            <p>Создаёт тёплый визуальный мир: мягкие формы, сочные ягодки и уютный домик Пенька.</p>
+          </article>
+          <article class="person">
+            <img src="assets/editor.jpg" alt="Редактор" loading="lazy" />
+            <h3>Редактор</h3>
+            <p>Следит, чтобы текст легко читался вслух и каждая страница радовала ребёнка и родителей.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contacts" class="section">
+        <h2>Контакты</h2>
+        <p>Напишите нам, если хотите сотрудничать, задать вопрос или предложить идею для новой истории.</p>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="row">
+            <label>Имя
+              <input type="text" name="name" required placeholder="Как к вам обращаться?" />
+            </label>
+            <label>Email
+              <input type="email" name="email" required placeholder="you@example.com" />
+            </label>
+          </div>
+          <label>Сообщение
+            <textarea name="message" required rows="5" placeholder="Ваше письмо..."></textarea>
+          </label>
+          <div class="row row-inline">
+            <label class="check">
+              <input type="checkbox" name="agree" required />
+              <span>Согласен(а) с обработкой данных</span>
+            </label>
+            <a class="mailto" href="mailto:hello@pnyok.example?subject=Письмо%20Пеньку">или отправить через почту</a>
+          </div>
+          <button type="submit" class="btn primary">Отправить</button>
+          <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <footer class="footer">
+        <p>© Пенёк, 2025. Берегите лес и друг друга.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Лайтбокс -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр изображения">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">×</button>
+    <img class="lightbox-img" id="lightboxImg" alt="" />
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
