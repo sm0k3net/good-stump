@@ -52,7 +52,7 @@ navLinks.forEach(link => {
 const shareData = {
   url: window.location.href,
   title: document.title,
-  text: 'Добрые лесные истории про Пенька и его друзей'
+  text: 'Добрые лесные истории про Саню и его друзей'
 };
 
 function openShare(network){
@@ -186,3 +186,48 @@ if (form) {
     formNote.style.color = 'var(--primary-600)';
   });
 }
+
+// Audio player for books
+let currentAudio = null;
+
+function playAudio(bookId) {
+  // Stop current audio if playing
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+
+  // Map book IDs to audio files
+  const audioFiles = {
+    book1: 'assets/audio/book-1.mp3',
+    book2: 'assets/audio/book-2.mp3',
+    book3: 'assets/audio/book-3.mp3'
+  };
+
+  const audioSrc = audioFiles[bookId];
+  if (!audioSrc) {
+    alert('Аудиозапись скоро будет доступна!');
+    return;
+  }
+
+  currentAudio = new Audio(audioSrc);
+  
+  currentAudio.addEventListener('loadstart', () => {
+    console.log('Загрузка аудио...');
+  });
+  
+  currentAudio.addEventListener('error', () => {
+    alert('Аудиозапись скоро будет доступна!');
+  });
+  
+  currentAudio.play().catch(() => {
+    alert('Аудиозапись скоро будет доступна!');
+  });
+}
+
+// Stop audio when page unloads
+window.addEventListener('beforeunload', () => {
+  if (currentAudio) {
+    currentAudio.pause();
+  }
+});

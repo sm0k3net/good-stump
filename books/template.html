@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Доброе утро, Саня — мини‑книга с разворотами</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#f7faf8;
+      --paper:#fffdf8;
+      --ink:#2b332c;
+      --muted:#5e6b63;
+      --primary:#2f7a5c;
+      --accent:#ff8a3d;
+      --accent-2:#ffb062;
+      --shadow:0 10px 40px rgba(16,35,26,.15), 0 3px 14px rgba(16,35,26,.08);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(70vw 70vw at -10% -20%, rgba(47,122,92,.14), transparent 60%),
+        radial-gradient(40vw 40vw at 120% 10%, rgba(255,138,61,.10), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font-family:"Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.75;
+      overflow-x:hidden;
+    }
+
+    /* Floating forest decorations */
+    .forest-decor::before,
+    .forest-decor::after{
+      content:""; position:fixed; inset:0; pointer-events:none;
+      background-repeat:no-repeat; z-index:-1;
+    }
+    .forest-decor::before{
+      opacity:.10; filter: blur(1px);
+      background-image:
+        radial-gradient(10px 14px at 12% 22%, #2f7a5c, transparent 70%),
+        radial-gradient(8px 10px at 80% 12%, #ff8a3d, transparent 70%),
+        radial-gradient(7px 9px at 70% 80%, #2f7a5c, transparent 70%),
+        radial-gradient(6px 8px at 18% 78%, #ffb062, transparent 70%),
+        radial-gradient(8px 12px at 55% 90%, #2f7a5c, transparent 72%);
+      animation: drift 26s linear infinite alternate;
+    }
+    .forest-decor::after{
+      opacity:.08; mix-blend-mode:multiply;
+      background-image:
+        radial-gradient(6px 8px at 30% 40%, #2f7a5c, transparent 70%),
+        radial-gradient(8px 10px at 85% 65%, #ff8a3d, transparent 70%),
+        radial-gradient(7px 9px at 10% 85%, #3f9f7a, transparent 70%);
+      animation: drift2 32s linear infinite alternate-reverse;
+    }
+    @keyframes drift{ from{transform:translateY(-10px)} to{transform:translateY(14px)} }
+    @keyframes drift2{ from{transform:translateY(8px)} to{transform:translateY(-12px)} }
+
+    header.site-head{
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      padding:14px 16px; position:sticky; top:0; z-index:5;
+      backdrop-filter: blur(6px);
+      background:linear-gradient(to bottom, rgba(255,255,255,.75), rgba(255,255,255,.35));
+      border-bottom:1px solid rgba(0,0,0,.05);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; color:var(--primary);
+      font-family:"Comfortaa"; font-weight:700; letter-spacing:.3px;
+    }
+    .brand img{width:36px; height:36px; object-fit:contain}
+
+    .wrap{
+      min-height:calc(100% - 64px);
+      display:flex; align-items:center; justify-content:center;
+      padding:28px 16px 40px;
+    }
+
+    /* Book shell */
+    .book-shell{
+      width:min(1100px, 94vw);
+      position:relative;
+      padding:28px;
+      border-radius:26px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
+      box-shadow: var(--shadow);
+    }
+    .book-shell::before{
+      content:""; position:absolute; inset:8px; border-radius:20px;
+      background:
+        repeating-linear-gradient(90deg, rgba(47,122,92,.05) 0 2px, transparent 2px 8px),
+        radial-gradient(1200px 500px at 50% -420px, rgba(255,255,255,.6), transparent 70%);
+      pointer-events:none;
+    }
+
+    .controls{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;
+    }
+    .btn{
+      display:inline-grid; place-items:center;
+      min-width:46px; height:46px; padding:0 .9rem;
+      background:#ffffff; color:var(--primary);
+      border:none; border-radius:12px; cursor:pointer;
+      box-shadow: var(--shadow);
+      font-weight:800;
+      transition:transform .06s ease, background .15s ease, opacity .15s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background: linear-gradient( to right, var(--primary), #3f9f7a); color:#fff}
+    .btn.disabled{opacity:.5; pointer-events:none}
+    .counter{min-width:86px; text-align:center; color:var(--muted); font-weight:700}
+
+    .progress{
+      flex:1; height:10px; border-radius:999px; background:rgba(47,122,92,.12); overflow:hidden;
+    }
+    .progress > span{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent-2))}
+
+    .book{
+      position:relative; perspective: 1600px;
+      background: transparent; border-radius:20px; overflow:hidden;
+    }
+
+    .spread{
+      display:grid; grid-template-columns: 1fr 1fr; gap:0;
+      transform-origin:center; transition: transform .5s ease;
+    }
+    .book.turn-right .spread{ animation: turnR .45s ease both }
+    .book.turn-left .spread{ animation: turnL .45s ease both }
+    @keyframes turnR{ from{ transform: rotateY(0deg) } to{ transform: rotateY(4deg) } }
+    @keyframes turnL{ from{ transform: rotateY(0deg) } to{ transform: rotateY(-4deg) } }
+
+    .page{
+      background: var(--paper);
+      padding:28px 26px 34px;
+      min-height: 600px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+      position:relative;
+      overflow:hidden;
+    }
+    .page::before{
+      content:""; position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0 2px, transparent 2px 20px),
+        radial-gradient(600px 120px at var(--xshadow, 0%) 0%, rgba(0,0,0,.10), transparent 70%);
+      opacity:.35; pointer-events:none;
+    }
+    .page.left{ border-right:1px solid rgba(0,0,0,.06); --xshadow:0% }
+    .page.right{ border-left:1px solid rgba(0,0,0,.06); --xshadow:100% }
+
+    .page h1, .page h2{
+      font-family:"Comfortaa"; color:var(--primary); margin:0 0 .5rem
+    }
+    .page h1{ font-size:clamp(22px, 3.2vw, 30px) }
+    .page h2{ font-size:clamp(20px, 2.6vw, 26px) }
+    .page p{ margin:.45rem 0 .9rem }
+    .subtle{ color:var(--muted) }
+
+    .art{
+      background: #eef6f1; border:2px dashed rgba(47,122,92,.35);
+      border-radius:14px; display:flex; align-items:center; justify-content:center;
+      color:#3b6d58; font-weight:700; text-align:center;
+      padding:12px; margin:.7rem 0 1rem; min-height:170px;
+    }
+    .art.small{ min-height:120px }
+    .art .note{ font-weight:600; color:#2f7a5c }
+    .cap{ font-size:.92rem; color:var(--muted); margin-top:-.4rem; margin-bottom:.8rem }
+
+    .quote{
+      border-left:4px solid var(--accent); padding:.4rem .9rem; background:rgba(255,138,61,.08);
+      border-radius:10px; margin:.8rem 0 1rem;
+    }
+
+    .page-num{
+      position:absolute; bottom:10px; left:0; right:0; text-align:center;
+      color:#8a968f; font-size:.85rem;
+    }
+
+    /* Single-page layout on small screens */
+    @media (max-width: 860px){
+      .spread{ grid-template-columns: 1fr }
+      .page{ min-height: 560px }
+    }
+
+    /* Accessibility focus */
+    :where(button){outline:none}
+    :where(button):focus-visible{ outline:3px solid #88d1b7; outline-offset:3px }
+  </style>
+</head>
+<body class="forest-decor">
+  <header class="site-head" aria-label="Шапка книги">
+    <div class="brand">
+      <img src="../assets/hero-wave.png" alt="Саня машет" />
+      <span>Саня — мини‑книга</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="book-shell" role="region" aria-label="Книга с разворотами">
+      <div class="controls">
+        <button id="prev" class="btn" aria-label="Предыдущий разворот">←</button>
+        <div class="counter" id="counter" aria-live="polite">1 / 6</div>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        <button id="next" class="btn primary" aria-label="Следующий разворот">→</button>
+      </div>
+
+      <div class="book" id="book">
+        <!-- Разворот 1 -->
+        <section class="spread" data-spread="1" aria-label="Разворот 1">
+          <article class="page left">
+            <h1>Доброе утро, Саня!</h1>
+            <p class="subtle">Сказка для детей 4–8 лет</p>
+
+            <div class="art" role="img" aria-label="Обложка: Саня приветствует читателей">
+              Плейсхолдер обложки<br/><span class="note">[Саня приветствует: «Привет! Я Саня — пойдём со мной в лес за историями.»]</span>
+            </div>
+
+            <div class="quote">
+              Привет! Я Саня — пойдём со мной в лес за историями. Здесь каждое утро — новое открытие.
+            </div>
+            <p>Перед вами добрая история о внимательности, дружбе и смекалке. О том, как маленькие дела делают лес светлее, а сердца — теплее.</p>
+            <p>Сделайте вдох — вы услышите, как шепчет трава и улыбаются листья. Наш путь начинается.</p>
+
+            <div class="page-num">1</div>
+          </article>
+
+          <article class="page right">
+            <h2>Глава 1. Утро и зарядка</h2>
+            <p>Солнце осторожно заглянуло в окно домика. Саня потянулся, поскрипывая корой, и улыбнулся: новый день начался.</p>
+            <p>Он делает зарядку под щебет синичек: наклоны, кружочки руками, прыжки‑пеньки. Каждое движение — как привет лесу.</p>
+            <div class="art small" role="img" aria-label="Саня делает зарядку у окна">
+              Плейсхолдер иллюстрации — зарядка
+            </div>
+            <p class="cap">Утро начинается с заботы о себе — тогда сил хватает заботиться о других.</p>
+            <p>Пока чайник шумит на плите, Саня распахивает окно, впуская аромат хвои и сырого мха — так пахнет чистый лес.</p>
+
+            <div class="page-num">2</div>
+          </article>
+        </section>
+
+        <!-- Разворот 2 -->
+        <section class="spread" data-spread="2" aria-label="Разворот 2">
+          <article class="page left">
+            <h2>Завтрак</h2>
+            <p>На столе — мятный чай, лесная лепёшка, ложечка мёда и ягоды. Аромат трав наполняет дом, а за окном роса блестит как бусинки.</p>
+            <p>Саня бережно раскладывает еду, благодарит лес за дары и думает: кому сегодня нужна помощь?</p>
+            <div class="art" role="img" aria-label="Стол с чаем, ягодами и мёдом">
+              Плейсхолдер иллюстрации — завтрак
+            </div>
+            <p>Он записывает в блокнот: «Обход в три шага: тропинка — озеро — поляна у старой ели».</p>
+
+            <div class="page-num">3</div>
+          </article>
+
+          <article class="page right">
+            <h2>Глава 2. Обход леса</h2>
+            <p>Кепка на месте, худи застёгнут, мелодия на губах — пора в путь. Тропинка мягко пружинит, листья шуршат под ногами.</p>
+            <p>— Доброе утро, капитан стройки! — машет Саня муравью в каске. Тот гордо тащит веточку, подмигивает и строем ведёт товарищей.</p>
+            <div class="art small" role="img" aria-label="Саня идёт по тропинке, муравьи рядом">
+              Плейсхолдер — тропинка и муравьи
+            </div>
+            <p>В ветвях смеются белки, на пеньке‑соседе дремлет улитка. У каждого — свои дела, но в лесу все — соседи.</p>
+
+            <div class="page-num">4</div>
+          </article>
+        </section>
+
+        <!-- Разворот 3 -->
+        <section class="spread" data-spread="3" aria-label="Разворот 3">
+          <article class="page left">
+            <h2>Глава 3. Белочка на высоте</h2>
+            <p>— Пенеёёк! — тоненький голосок с верхушки ели. Белочка машет лапкой: корзинка со скорлупками осталась на толстой ветке.</p>
+            <p>— Сейчас! — улыбается Саня. Ставит ящик, тянется и мягко снимает корзинку. Скорлупки весело постукивают внутри — тук‑тук‑тук.</p>
+            <div class="art" role="img" aria-label="Саня помогает белочке с корзиной на ветке">
+              Плейсхолдер — помощь белочке
+            </div>
+            <p class="subtle">Иногда нужна всего одна внимательная рука — и забота превращает проблему в улыбку.</p>
+
+            <div class="page-num">5</div>
+          </article>
+
+          <article class="page right">
+            <h2>Немного тепла</h2>
+            <p>— Спасибо! — пищит белочка. — Я внизу почищу и всё унесу в лесной компост. Так будет чище.</p>
+            <p>— Вместе лес чище, — кивает Саня. Они улыбаются друг другу и договариваются встретиться вечером на ореховом чае.</p>
+            <div class="art small" role="img" aria-label="Белочка на корнях, корзинка рядом">
+              Плейсхолдер — белочка на земле
+            </div>
+            <p>Саня записывает в блокнот: «Задача 1 — готово. Лес улыбнулся».</p>
+
+            <div class="page-num">6</div>
+          </article>
+        </section>
+
+        <!-- Разворот 4 -->
+        <section class="spread" data-spread="4" aria-label="Разворот 4">
+          <article class="page left">
+            <h2>Глава 4. Енот у озера</h2>
+            <p>У кромки воды енот стирает вещи. Вдруг корзина с носочками ускользает и плывёт к середине.</p>
+            <p>— Ой‑ой! — енот в растерянности машет лапами. Волны хохочут и уносят полосатые носочки дальше.</p>
+            <div class="art" role="img" aria-label="Енот у воды, корзина плывёт">
+              Плейсхолдер — корзина уплывает
+            </div>
+            <p>Вода чистая и быстрая, заходить глубоко опасно. Нужен план, а не спешка.</p>
+
+            <div class="page-num">7</div>
+          </article>
+
+          <article class="page right">
+            <h2>Смекалка в деле</h2>
+            <p>Саня находит верёвку и палку, сгибает большую скрепку в крючок. Прочно привязывает — безопасность прежде всего.</p>
+            <p>Осторожно тянется, цепляет корзину и ведёт к берегу. — Ура! — смеётся енот. — Без тебя мои вещи устроили бы заплыв!</p>
+            <div class="art small" role="img" aria-label="Саня тянет корзину крючком">
+              Плейсхолдер — достаёт корзину
+            </div>
+            <p class="subtle">Когда не паниковать, решения приходят быстрее. Смекалка — лучший спасательный круг.</p>
+
+            <div class="page-num">8</div>
+          </article>
+        </section>
+
+        <!-- Разворот 5 -->
+        <section class="spread" data-spread="5" aria-label="Разворот 5">
+          <article class="page left">
+            <h2>Глава 5. Узелок в кустах</h2>
+            <p>В чаще Саня замечает странный узелок. Слышится тихое «пик‑пик» — в ловушку попала маленькая птичка.</p>
+            <p>— Тише, не дёргайся, — шепчет Саня. — Сейчас всё распутаем. Он аккуратно осматривает верёвки, чтобы не навредить.</p>
+            <div class="art" role="img" aria-label="Птичка в узелке, Саня рядом">
+              Плейсхолдер — птичка в ловушке
+            </div>
+            <p>Ножиком нельзя — риск задеть лапку. Терпение и мягкие пальцы — лучший инструмент.</p>
+
+            <div class="page-num">9</div>
+          </article>
+
+          <article class="page right">
+            <h2>Забота исцеляет</h2>
+            <p>Саня перебинтовывает лапку мягким мхом и шепчет: — Отдохни, сегодня летать не нужно. Я рядом.</p>
+            <p>Он делает гнёздышко из листьев и оставляет каплю ягодного сока. Птичка тихо поёт — это её «спасибо».</p>
+            <div class="art small" role="img" aria-label="Саня бинтует лапку птичке">
+              Плейсхолдер — помощь птичке
+            </div>
+            <p class="subtle">Добро — это когда кому‑то становится легче и спокойнее.</p>
+
+            <div class="page-num">10</div>
+          </article>
+        </section>
+
+        <!-- Разворот 6 -->
+        <section class="spread" data-spread="6" aria-label="Разворот 6">
+          <article class="page left">
+            <h2>Глава 6. Домашний обед</h2>
+            <p>День получился длинным и тёплым. Дома Саня ставит чайник, готовит пюре из корешков и компот из ягод.</p>
+            <p>Он записывает в блокнот: «Помог белочке, еноту и птичке. Лес — наш общий дом».</p>
+            <div class="art" role="img" aria-label="Уютный домик Сани, обед на столе">
+              Плейсхолдер — обед дома
+            </div>
+            <p>За окном белочка машет хвостом, а енот приносит полосатую салфетку в подарок. Дружба делает дом ещё уютнее.</p>
+
+            <div class="page-num">11</div>
+          </article>
+
+          <article class="page right">
+            <h2>Вывод</h2>
+            <p><strong>Помощь — это внимание к мелочам.</strong> Иногда достаточно подать корзинку, достать её из воды или аккуратно перевязать лапку.</p>
+            <p><strong>Смекалка и спокойствие</strong> помогают там, где кажется, что всё ускользает.</p>
+            <p><strong>Мы вместе сильнее.</strong> Когда каждый заботится, лес становится светлее — как сердце Сани.</p>
+            <div class="art small" role="img" aria-label="Саня машет, на заднем плане лес">
+              Плейсхолдер — финальное прощание
+            </div>
+            <p class="subtle">Будь как Саня: внимательным, добрым и смелым. Тогда каждый день — маленький праздник.</p>
+
+            <div class="page-num">12</div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const spreads = Array.from(document.querySelectorAll('.spread'));
+    const book = document.getElementById('book');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const progressBar = document.getElementById('progressBar');
+    const counter = document.getElementById('counter');
+
+    let index = 0; // current spread (0-based)
+    const total = spreads.length;
+
+    function updateControls(){
+      prev.classList.toggle('disabled', index === 0);
+      next.classList.toggle('disabled', index === total - 1);
+      const percent = ((index+1)/total)*100;
+      progressBar.style.width = percent + '%';
+      counter.textContent = (index+1) + ' / ' + total;
+    }
+
+    function showSpread(i, dir){
+      if (i < 0 || i >= total) return;
+      index = i;
+      spreads.forEach((s, idx) => { s.style.display = idx === i ? 'grid' : 'none'; });
+      // turn animation hint
+      book.classList.remove('turn-left','turn-right');
+      void book.offsetWidth; // reflow
+      if (dir === 'right') book.classList.add('turn-right');
+      if (dir === 'left') book.classList.add('turn-left');
+      updateControls();
+    }
+
+    // Init layout: only show first
+    spreads.forEach((s, i) => s.style.display = i === 0 ? 'grid' : 'none');
+    updateControls();
+
+    next.addEventListener('click', () => showSpread(index+1, 'right'));
+    prev.addEventListener('click', () => showSpread(index-1, 'left'));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') showSpread(index+1, 'right');
+      if (e.key === 'ArrowLeft') showSpread(index-1, 'left');
+    });
+
+    // Swipe for touch
+    let sx=0, sy=0, dx=0, dy=0;
+    book.addEventListener('touchstart', (e) => {
+      const t = e.touches[0]; sx = t.clientX; sy = t.clientY; dx=dy=0;
+    }, {passive:true});
+    book.addEventListener('touchmove', (e) => {
+      const t = e.touches[0]; dx = t.clientX - sx; dy = t.clientY - sy;
+    }, {passive:true});
+    book.addEventListener('touchend', () => {
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+        if (dx < 0) showSpread(index+1, 'right');
+        else showSpread(index-1, 'left');
+      }
+    });
+
+    // Click edges to navigate (desktop)
+    book.addEventListener('click', (e) => {
+      const rect = book.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      if (x > rect.width * 0.67) showSpread(index+1, 'right');
+      else if (x < rect.width * 0.33) showSpread(index-1, 'left');
+    });
+  </script>
+</body>
+</html>
