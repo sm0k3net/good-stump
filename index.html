@@ -86,221 +86,714 @@
 
     <!-- Контент -->
     <main class="content">
-      <!-- Главная секция -->
+      <!-- Hero-секция с слайдером -->
       <section class="hero-section" aria-label="Добро пожаловать">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1 class="hero-title">Добро пожаловать в мир Сани!</h1>
-            <p class="hero-subtitle">Добрые лесные истории для детей 3-8 лет. Читайте, слушайте и скачивайте бесплатно.</p>
+        <div class="hero-container">
+          <div class="hero-content">
+            <div class="hero-badge">Добрые лесные истории</div>
+            <h1 class="hero-title">Добро пожаловать<br>в мир <span class="hero-highlight">Сани!</span></h1>
+            <p class="hero-subtitle">Познакомьтесь с добрым лесным героем и его друзьями. Читайте увлекательные истории, слушайте аудиокниги и скачивайте материалы бесплатно.</p>
             <div class="hero-actions">
-              <a href="#books" class="btn primary large">Наши книги</a>
-              <a href="#gallery" class="btn ghost large">Посмотреть картинки</a>
+              <a href="#books" class="btn-hero primary">
+                <span>📚</span>
+                <div>
+                  <strong>Читать книги</strong>
+                  <small>Бесплатные истории</small>
+                </div>
+              </a>
+              <a href="#gallery" class="btn-hero secondary">
+                <span>🎨</span>
+                <div>
+                  <strong>Смотреть картинки</strong>
+                  <small>Красочные иллюстрации</small>
+                </div>
+              </a>
             </div>
           </div>
-          <div class="hero-image">
-            <img src="assets/hero-wave.png" alt="Саня приветствует читателей" class="hero-character" />
-            <div class="hero-decor">
-              <div class="leaves decor"></div>
-              <div class="acorns decor"></div>
+          
+          <div class="hero-slider">
+            <div class="slider-container">
+              <div class="slide active">
+                <img src="assets/hero-slide-1.jpg" alt="Саня приветствует в лесу" />
+                <div class="slide-caption">Саня встречает новый день</div>
+              </div>
+              <div class="slide">
+                <img src="assets/hero-slide-2.jpg" alt="Саня с друзьями" />
+                <div class="slide-caption">Друзья в лесном приключении</div>
+              </div>
+              <div class="slide">
+                <img src="assets/hero-slide-3.jpg" alt="Саня читает книгу" />
+                <div class="slide-caption">Время для добрых историй</div>
+              </div>
+            </div>
+            <div class="slider-controls">
+              <button class="slider-btn prev" onclick="changeSlide(-1)" aria-label="Предыдущий слайд">❮</button>
+              <button class="slider-btn next" onclick="changeSlide(1)" aria-label="Следующий слайд">❯</button>
+            </div>
+            <div class="slider-dots">
+              <button class="dot active" onclick="currentSlide(1)" aria-label="Слайд 1"></button>
+              <button class="dot" onclick="currentSlide(2)" aria-label="Слайд 2"></button>
+              <button class="dot" onclick="currentSlide(3)" aria-label="Слайд 3"></button>
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="about" class="section">
-        <h1>Про Саню</h1>
-        <p>
-          Саня — это тёплый и любознательный герой, который умеет видеть в каждом дне маленькое чудо. 
-          Он носит синюю кепку и оранжевый худи, на макушке у него растёт зелёный росток — символ доброты и роста.
-        </p>
-        <p>
-          Вместе с белочкой, енотом и другими лесными друзьями он учится дружбе, взаимопомощи и заботе о природе. 
-          Каждая история — это приключение, в котором есть место смеху, открытиям и сердечной поддержке.
-        </p>
-        <ul class="pill-list">
-          <li>Дружба и эмпатия</li>
-          <li>Забота о лесах</li>
-          <li>Смелость исследовать</li>
-          <li>Юмор и тёплые диалоги</li>
-        </ul>
-        <div class="about-image">
-          <img src="assets/scene-walk.png" alt="Саня идёт по лесной тропинке" class="character-scene" loading="lazy"/>
-          <p class="image-caption">Уютные тропинки, шуршание листьев и добрые встречи — там, где живёт Саня.</p>
-        </div>
-      </section>
-
-      <section id="books" class="section">
-        <h2>Наши Книги</h2>
-        <p>Откройте серию добрых историй. Эти книги легко читать вслух и рассматривать вместе с детьми.</p>
-        <div class="cards">
-          <article class="card">
-            <img src="assets/book-1.jpg" alt="Обложка книги «Саня и домик у тропинки»" loading="lazy" />
-            <div class="card-body">
-              <h3>Саня и домик у тропинки</h3>
-              <p>Саня строит настоящий, гостеприимный домик, где есть место каждому другу. Вместе они учатся делиться и помогать.</p>
-              <div class="tags"><span>3–7 лет</span><span>Дружба</span><span>Дом</span></div>
-              <div class="actions">
-                <a class="btn primary" href="books/template.html" target="_blank">Читать</a>
-                <button class="btn secondary" onclick="playAudio('book1')">Слушать</button>
-                <a class="btn ghost" href="assets/book-1.pdf" download>Скачать PDF</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <img src="assets/book-2.jpg" alt="Обложка книги «Тропинка к ягодной поляне»" loading="lazy" />
-            <div class="card-body">
-              <h3>Тропинка к ягодной поляне</h3>
-              <p>По дороге к поляне Саня встречает белочку и медведя, узнаёт, как важно делиться и беречь лесные богатства.</p>
-              <div class="tags"><span>4–8 лет</span><span>Природа</span><span>Доброта</span></div>
-              <div class="actions">
-                <a class="btn primary" href="books/template.html" target="_blank">Читать</a>
-                <button class="btn secondary" onclick="playAudio('book2')">Слушать</button>
-                <a class="btn ghost" href="assets/book-2.pdf" download>Скачать PDF</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <img src="assets/book-3.jpg" alt="Обложка книги «Чистая тропинка»" loading="lazy" />
-            <div class="card-body">
-              <h3>Чистая тропинка</h3>
-              <p>Саня и друзья находят мусор в лесу и вместе превращают заботу о природе в увлекательную игру.</p>
-              <div class="tags"><span>3–7 лет</span><span>Экология</span><span>Команда</span></div>
-              <div class="actions">
-                <a class="btn primary" href="books/template.html" target="_blank">Читать</a>
-                <button class="btn secondary" onclick="playAudio('book3')">Слушать</button>
-                <a class="btn ghost" href="assets/book-3.pdf" download>Скачать PDF</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="gallery" class="section">
-        <h2>Картинки</h2>
-        <p>Иллюстрации, полные света, деталей и тихих смешков лесных друзей.</p>
-        <div class="gallery">
-          <a class="thumb" href="assets/gallery-1.jpg" data-caption="Саня машет читателям у своего домика.">
-            <img src="assets/gallery-1-thumb.jpg" alt="Саня у домика" loading="lazy" />
-          </a>
-          <a class="thumb" href="assets/gallery-2.jpg" data-caption="Дорога через лес, белочка машет с ветки.">
-            <img src="assets/gallery-2-thumb.jpg" alt="Саня идёт по лесу" loading="lazy" />
-          </a>
-          <a class="thumb" href="assets/gallery-3.jpg" data-caption="Медведь собирает ягоды у куста.">
-            <img src="assets/gallery-3-thumb.jpg" alt="Медведь собирает ягоды" loading="lazy" />
-          </a>
-          <a class="thumb" href="assets/gallery-4.jpg" data-caption="Чистая тропинка после уборки.">
-            <img src="assets/gallery-4-thumb.jpg" alt="Чистая тропинка" loading="lazy" />
-          </a>
-        </div>
-      </section>
-
-      <section id="coloring" class="section">
-        <h2>Раскраски</h2>
-        <p>Скачивайте и раскрашивайте вместе. Каждая раскраска — повод для разговора о доброте и природе.</p>
-        <div class="downloads">
-          <article class="dl">
-            <h3>Саня приветствует</h3>
-            <p>Контурный рисунок героя с кепкой и ростком.</p>
-            <a class="btn primary" href="assets/coloring-stump-wave.pdf" download>Скачать PDF</a>
-            <a class="btn ghost" href="assets/coloring-stump-wave.pdf" target="_blank" rel="noopener">Открыть</a>
-          </article>
-          <article class="dl">
-            <h3>Дорога через лес</h3>
-            <p>Саня идёт по тропинке, белочка машет с ветки.</p>
-            <a class="btn primary" href="assets/coloring-forest-path.pdf" download>Скачать PDF</a>
-            <a class="btn ghost" href="assets/coloring-forest-path.pdf" target="_blank" rel="noopener">Открыть</a>
-          </article>
-          <article class="dl">
-            <h3>Чистая тропинка</h3>
-            <p>Учимся бережно относиться к лесу и помогать друзьям.</p>
-            <a class="btn primary" href="assets/coloring-clean-path.pdf" download>Скачать PDF</a>
-            <a class="btn ghost" href="assets/coloring-clean-path.pdf" target="_blank" rel="noopener">Открыть</a>
-          </article>
-        </div>
-      </section>
-
-      <section id="about-us" class="section">
-        <h2>О Нас</h2>
-        <div class="team">
-          <article class="person">
-            <img src="assets/author.jpg" alt="Автор серии" loading="lazy" />
-            <h3>Автор</h3>
-            <p>Придумывает истории, в которых звучат добрые разговоры, шутки и важные вопросы о дружбе.</p>
-          </article>
-          <article class="person">
-            <img src="assets/illustrator.jpg" alt="Иллюстратор" loading="lazy" />
-            <h3>Иллюстратор</h3>
-            <p>Создаёт тёплый визуальный мир: мягкие формы, сочные ягодки и уютный домик Пенька.</p>
-          </article>
-          <article class="person">
-            <img src="assets/editor.jpg" alt="Редактор" loading="lazy" />
-            <h3>Редактор</h3>
-            <p>Следит, чтобы текст легко читался вслух и каждая страница радовала ребёнка и родителей.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="contacts" class="section">
-        <h2>Контакты</h2>
-        <p>Напишите нам, если хотите сотрудничать, задать вопрос или предложить идею для новой истории.</p>
         
-        <div class="contact-grid">
-          <div class="contact-methods">
-            <h3>Наши контакты</h3>
-            <div class="contact-item">
-              <div class="contact-icon">📧</div>
-              <div>
-                <strong>Email</strong>
-                <a href="mailto:info@penek-story.ru">info@penek-story.ru</a>
-              </div>
+        <div class="hero-decoration">
+          <div class="floating-element leaf-1">🍃</div>
+          <div class="floating-element leaf-2">🌿</div>
+          <div class="floating-element acorn-1">🌰</div>
+          <div class="floating-element flower-1">🌸</div>
+        </div>
+      </section>
+
+      <section id="about" class="section about-section">
+        <div class="section-header">
+          <span class="section-badge">Знакомство</span>
+          <h2 class="section-title">Про Саню</h2>
+          <p class="section-subtitle">Познакомьтесь с нашим добрым лесным героем</p>
+        </div>
+        
+        <div class="about-grid">
+          <div class="about-content">
+            <div class="about-card">
+              <div class="card-icon">🌱</div>
+              <h3>Добрый и любознательный</h3>
+              <p>Саня — это тёплый герой, который умеет видеть в каждом дне маленькое чудо. Он носит синюю кепку и оранжевый худи, на макушке у него растёт зелёный росток.</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon">📢</div>
-              <div>
-                <strong>Новости в Telegram</strong>
-                <a href="https://t.me/penek_story_news" target="_blank" rel="noopener">@penek_story_news</a>
-              </div>
+            
+            <div class="about-card">
+              <div class="card-icon">🐿️</div>
+              <h3>Верные друзья</h3>
+              <p>Вместе с белочкой, енотом и другими лесными друзьями он учится дружбе, взаимопомощи и заботе о природе.</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon">💬</div>
-              <div>
-                <strong>Обратная связь</strong>
-                <a href="https://t.me/penek_story" target="_blank" rel="noopener">@penek_story</a>
-              </div>
+            
+            <div class="about-card">
+              <div class="card-icon">✨</div>
+              <h3>Увлекательные приключения</h3>
+              <p>Каждая история — это приключение, в котором есть место смеху, открытиям и сердечной поддержке.</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon">🤖</div>
-              <div>
-                <strong>Интерактивный бот</strong>
-                <a href="https://t.me/penek_story_bot" target="_blank" rel="noopener">@penek_story_bot</a>
+          </div>
+          
+          <div class="about-visual">
+            <div class="character-showcase">
+              <img src="assets/scene-walk.png" alt="Саня идёт по лесной тропинке" class="character-image" loading="lazy"/>
+              <div class="showcase-overlay">
+                <div class="showcase-badge">Герой историй</div>
               </div>
             </div>
           </div>
+        </div>
+        
+        <div class="about-features">
+          <div class="feature-item">
+            <span class="feature-emoji">💝</span>
+            <span>Дружба и эмпатия</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-emoji">🌲</span>
+            <span>Забота о лесах</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-emoji">🔍</span>
+            <span>Смелость исследовать</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-emoji">😊</span>
+            <span>Юмор и тёплые диалоги</span>
+          </div>
+        </div>
+      </section>
 
-          <form class="contact-form" id="contactForm" novalidate>
-            <h3>Написать нам</h3>
-            <div class="row">
-              <label>Имя
-                <input type="text" name="name" required placeholder="Как к вам обращаться?" />
-              </label>
-              <label>Email
-                <input type="email" name="email" required placeholder="you@example.com" />
-              </label>
+      <section id="books" class="section books-section">
+        <div class="section-header">
+          <span class="section-badge">Библиотека</span>
+          <h2 class="section-title">Наши Книги</h2>
+          <p class="section-subtitle">Откройте серию добрых историй для совместного чтения</p>
+        </div>
+        
+        <div class="books-grid">
+          <article class="book-card">
+            <div class="book-cover">
+              <img src="assets/book-1.jpg" alt="Обложка книги «Саня и домик у тропинки»" loading="lazy" />
+              <div class="book-overlay">
+                <span class="book-age">3-7 лет</span>
+              </div>
             </div>
-            <label>Сообщение
-              <textarea name="message" required rows="5" placeholder="Ваше письмо..."></textarea>
-            </label>
-            <div class="form-bottom">
-              <label class="check">
-                <input type="checkbox" name="agree" required />
-                <span>Согласен(а) с обработкой данных</span>
-              </label>
-              <button type="submit" class="btn primary">Отправить</button>
+            <div class="book-content">
+              <h3 class="book-title">Саня и домик у тропинки</h3>
+              <p class="book-description">Саня строит настоящий, гостеприимный домик, где есть место каждому другу. Вместе они учатся делиться и помогать.</p>
+              <div class="book-tags">
+                <span class="tag">Дружба</span>
+                <span class="tag">Дом</span>
+                <span class="tag">Помощь</span>
+              </div>
             </div>
-            <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
-          </form>
+            <div class="book-actions">
+              <a class="book-btn primary" href="books/template.html" target="_blank">
+                <span>📖</span> Читать
+              </a>
+              <a class="book-btn secondary" href="assets/book-1.pdf" download>
+                <span>📄</span> PDF
+              </a>
+              <button class="book-btn accent" onclick="playAudio('book1')">
+                <span>🎧</span> Слушать
+              </button>
+            </div>
+          </article>
+
+          <article class="book-card">
+            <div class="book-cover">
+              <img src="assets/book-2.jpg" alt="Обложка книги «Тропинка к ягодной поляне»" loading="lazy" />
+              <div class="book-overlay">
+                <span class="book-age">4-8 лет</span>
+              </div>
+            </div>
+            <div class="book-content">
+              <h3 class="book-title">Тропинка к ягодной поляне</h3>
+              <p class="book-description">По дороге к поляне Саня встречает белочку и медведя, узнаёт, как важно делиться и беречь лесные богатства.</p>
+              <div class="book-tags">
+                <span class="tag">Природа</span>
+                <span class="tag">Доброта</span>
+                <span class="tag">Щедрость</span>
+              </div>
+            </div>
+            <div class="book-actions">
+              <a class="book-btn primary" href="books/template.html" target="_blank">
+                <span>📖</span> Читать
+              </a>
+              <a class="book-btn secondary" href="assets/book-2.pdf" download>
+                <span>📄</span> PDF
+              </a>
+              <button class="book-btn accent" onclick="playAudio('book2')">
+                <span>🎧</span> Слушать
+              </button>
+            </div>
+          </article>
+
+          <article class="book-card">
+            <div class="book-cover">
+              <img src="assets/book-3.jpg" alt="Обложка книги «Чистая тропинка»" loading="lazy" />
+              <div class="book-overlay">
+                <span class="book-age">3-7 лет</span>
+              </div>
+            </div>
+            <div class="book-content">
+              <h3 class="book-title">Чистая тропинка</h3>
+              <p class="book-description">Саня и друзья находят мусор в лесу и вместе превращают заботу о природе в увлекательную игру.</p>
+              <div class="book-tags">
+                <span class="tag">Экология</span>
+                <span class="tag">Команда</span>
+                <span class="tag">Ответственность</span>
+              </div>
+            </div>
+            <div class="book-actions">
+              <a class="book-btn primary" href="books/template.html" target="_blank">
+                <span>📖</span> Читать
+              </a>
+              <a class="book-btn secondary" href="assets/book-3.pdf" download>
+                <span>📄</span> PDF
+              </a>
+              <button class="book-btn accent" onclick="playAudio('book3')">
+                <span>🎧</span> Слушать
+              </button>
+            </div>
+          </article>
+
+          <article class="book-card coming-soon">
+            <div class="book-cover">
+              <div class="coming-soon-placeholder">
+                <span class="coming-soon-icon">📚</span>
+                <span class="coming-soon-text">Скоро</span>
+              </div>
+            </div>
+            <div class="book-content">
+              <h3 class="book-title">Новая история</h3>
+              <p class="book-description">Мы работаем над новыми захватывающими приключениями Сани и его друзей. Следите за обновлениями!</p>
+              <div class="book-tags">
+                <span class="tag">Скоро</span>
+              </div>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn disabled" disabled>
+                <span>⏳</span> Ожидание
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="gallery" class="section gallery-section">
+        <div class="section-header">
+          <span class="section-badge">Галерея</span>
+          <h2 class="section-title">Картинки</h2>
+          <p class="section-subtitle">Иллюстрации, полные света, деталей и тихих смешков лесных друзей</p>
+        </div>
+        
+        <div class="gallery-slider">
+          <div class="gallery-container">
+            <div class="gallery-track" id="galleryTrack">
+              <div class="gallery-slide">
+                <img src="assets/gallery-1.jpg" alt="Саня у домика" loading="lazy" />
+                <div class="gallery-caption">Саня машет читателям у своего домика</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-2.jpg" alt="Саня в лесу" loading="lazy" />
+                <div class="gallery-caption">Дорога через лес, белочка машет с ветки</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-3.jpg" alt="Медведь с ягодами" loading="lazy" />
+                <div class="gallery-caption">Медведь собирает ягоды у куста</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-4.jpg" alt="Чистая тропинка" loading="lazy" />
+                <div class="gallery-caption">Чистая тропинка после уборки</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-5.jpg" alt="Саня читает" loading="lazy" />
+                <div class="gallery-caption">Саня читает книгу под деревом</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-6.jpg" alt="Друзья играют" loading="lazy" />
+                <div class="gallery-caption">Друзья играют на поляне</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-7.jpg" alt="Лесной пикник" loading="lazy" />
+                <div class="gallery-caption">Лесной пикник с друзьями</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-8.jpg" alt="Ночные звёзды" loading="lazy" />
+                <div class="gallery-caption">Саня смотрит на звёзды</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-9.jpg" alt="Рыбалка" loading="lazy" />
+                <div class="gallery-caption">Рыбалка на лесном озере</div>
+              </div>
+              <div class="gallery-slide">
+                <img src="assets/gallery-10.jpg" alt="Зимние забавы" loading="lazy" />
+                <div class="gallery-caption">Зимние забавы в лесу</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="gallery-controls">
+            <button class="gallery-btn prev" onclick="moveGallery(-1)" aria-label="Предыдущая картинка">
+              <span>❮</span>
+            </button>
+            <button class="gallery-btn next" onclick="moveGallery(1)" aria-label="Следующая картинка">
+              <span>❯</span>
+            </button>
+          </div>
+          
+          <div class="gallery-counter">
+            <span id="galleryCounter">1 / 10</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="coloring" class="section coloring-section">
+        <div class="section-header">
+          <span class="section-badge">Творчество</span>
+          <h2 class="section-title">Раскраски</h2>
+          <p class="section-subtitle">Скачивайте и раскрашивайте вместе. Каждая раскраска — повод для разговора о доброте и природе</p>
+        </div>
+        
+        <div class="coloring-slider">
+          <div class="coloring-container">
+            <div class="coloring-track" id="coloringTrack">
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-1.jpg" alt="Раскраска: Саня приветствует" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Саня приветствует</h3>
+                    <p>Контурный рисунок героя с кепкой и ростком</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-1.jpg', 'Саня приветствует')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-1.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-1.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-2.jpg" alt="Раскраска: Дорога через лес" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Дорога через лес</h3>
+                    <p>Саня идёт по тропинке, белочка машет с ветки</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-2.jpg', 'Дорога через лес')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-2.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-2.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-3.jpg" alt="Раскраска: Чистая тропинка" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Чистая тропинка</h3>
+                    <p>Учимся бережно относиться к лесу и помогать друзьям</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-3.jpg', 'Чистая тропинка')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-3.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-3.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-4.jpg" alt="Раскраска: Лесные друзья" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Лесные друзья</h3>
+                    <p>Саня и его друзья играют вместе</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-4.jpg', 'Лесные друзья')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-4.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-4.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-5.jpg" alt="Раскраска: Домик на дереве" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Домик на дереве</h3>
+                    <p>Уютный домик Сани среди ветвей</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-5.jpg', 'Домик на дереве')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-5.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-5.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-6.jpg" alt="Раскраска: Лесная поляна" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Лесная поляна</h3>
+                    <p>Красивая поляна с цветами и бабочками</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-6.jpg', 'Лесная поляна')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-6.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-6.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-7.jpg" alt="Раскраска: Рыбалка" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Рыбалка</h3>
+                    <p>Саня рыбачит на лесном озере</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-7.jpg', 'Рыбалка')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-7.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-7.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-8.jpg" alt="Раскраска: Пикник" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Лесной пикник</h3>
+                    <p>Друзья устраивают пикник на природе</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-8.jpg', 'Лесной пикник')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-8.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-8.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-9.jpg" alt="Раскраска: Звёздная ночь" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Звёздная ночь</h3>
+                    <p>Саня любуется звёздами в ночном лесу</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-9.jpg', 'Звёздная ночь')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-9.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-9.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="coloring-slide">
+                <div class="coloring-item">
+                  <img src="assets/coloring-10.jpg" alt="Раскраска: Зимние забавы" loading="lazy" />
+                  <div class="coloring-overlay">
+                    <h3>Зимние забавы</h3>
+                    <p>Снежные игры в зимнем лесу</p>
+                    <div class="coloring-actions">
+                      <button class="coloring-btn view" onclick="viewColoring('coloring-10.jpg', 'Зимние забавы')">
+                        <span>🔍</span> Увеличить
+                      </button>
+                      <a class="coloring-btn download" href="assets/coloring-10.pdf" download>
+                        <span>💾</span> Скачать
+                      </a>
+                      <button class="coloring-btn print" onclick="printColoring('assets/coloring-10.pdf')">
+                        <span>🖨️</span> Печать
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="coloring-controls">
+            <button class="coloring-nav-btn prev" onclick="moveColoring(-1)" aria-label="Предыдущая раскраска">
+              <span>❮</span>
+            </button>
+            <button class="coloring-nav-btn next" onclick="moveColoring(1)" aria-label="Следующая раскраска">
+              <span>❯</span>
+            </button>
+          </div>
+          
+          <div class="coloring-counter">
+            <span id="coloringCounter">1 / 10</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="about-us" class="section team-section">
+        <div class="section-header">
+          <span class="section-badge">Команда</span>
+          <h2 class="section-title">О Нас</h2>
+          <p class="section-subtitle">Талантливые люди, которые создают волшебный мир Сани</p>
+        </div>
+        
+        <div class="team-grid">
+          <article class="team-member">
+            <div class="member-photo">
+              <img src="assets/author.jpg" alt="Автор серии" loading="lazy" />
+              <div class="member-badge">✍️</div>
+            </div>
+            <div class="member-info">
+              <h3 class="member-role">Автор</h3>
+              <h4 class="member-name">Создатель историй</h4>
+              <p class="member-description">Придумывает истории, в которых звучат добрые разговоры, шутки и важные вопросы о дружбе. Каждая сказка — это маленький урок жизни.</p>
+              <div class="member-skills">
+                <span class="skill">Сценарии</span>
+                <span class="skill">Диалоги</span>
+                <span class="skill">Детская психология</span>
+              </div>
+            </div>
+          </article>
+          
+          <article class="team-member">
+            <div class="member-photo">
+              <img src="assets/illustrator.jpg" alt="Иллюстратор" loading="lazy" />
+              <div class="member-badge">🎨</div>
+            </div>
+            <div class="member-info">
+              <h3 class="member-role">Иллюстратор</h3>
+              <h4 class="member-name">Художник-мечтатель</h4>
+              <p class="member-description">Создаёт тёплый визуальный мир: мягкие формы, сочные ягодки и уютный домик Сани. Каждая иллюстрация оживляет текст.</p>
+              <div class="member-skills">
+                <span class="skill">Цифровая живопись</span>
+                <span class="skill">Персонажи</span>
+                <span class="skill">Атмосфера</span>
+              </div>
+            </div>
+          </article>
+          
+          <article class="team-member">
+            <div class="member-photo">
+              <img src="assets/editor.jpg" alt="Редактор" loading="lazy" />
+              <div class="member-badge">📝</div>
+            </div>
+            <div class="member-info">
+              <h3 class="member-role">Редактор</h3>
+              <h4 class="member-name">Хранитель качества</h4>
+              <p class="member-description">Следит, чтобы текст легко читался вслух и каждая страница радовала ребёнка и родителей. Делает истории ещё лучше.</p>
+              <div class="member-skills">
+                <span class="skill">Редактура</span>
+                <span class="skill">Адаптация</span>
+                <span class="skill">Контроль качества</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        
+        <div class="team-stats">
+          <div class="stat-item">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Книги выпущено</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Иллюстраций</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Счастливых читателей</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">2025</div>
+            <div class="stat-label">Год основания</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacts" class="section contacts-section">
+        <div class="section-header">
+          <span class="section-badge">Связь</span>
+          <h2 class="section-title">Контакты</h2>
+          <p class="section-subtitle">Напишите нам, если хотите сотрудничать, задать вопрос или предложить идею для новой истории</p>
+        </div>
+        
+        <div class="contacts-grid">
+          <div class="contact-buttons">
+            <h3 class="contacts-title">Свяжитесь с нами</h3>
+            
+            <a href="mailto:info@penek-story.ru" class="contact-button email">
+              <div class="contact-icon">📧</div>
+              <div class="contact-content">
+                <h4>Email</h4>
+                <p>info@penek-story.ru</p>
+                <span class="contact-desc">Напишите письмо</span>
+              </div>
+              <div class="contact-arrow">→</div>
+            </a>
+            
+            <a href="https://t.me/penek_story_news" target="_blank" rel="noopener" class="contact-button telegram">
+              <div class="contact-icon">📢</div>
+              <div class="contact-content">
+                <h4>Telegram канал</h4>
+                <p>@penek_story_news</p>
+                <span class="contact-desc">Новости и обновления</span>
+              </div>
+              <div class="contact-arrow">→</div>
+            </a>
+            
+            <a href="https://t.me/penek_story" target="_blank" rel="noopener" class="contact-button support">
+              <div class="contact-icon">💬</div>
+              <div class="contact-content">
+                <h4>Поддержка</h4>
+                <p>@penek_story</p>
+                <span class="contact-desc">Быстрые ответы</span>
+              </div>
+              <div class="contact-arrow">→</div>
+            </a>
+            
+            <a href="https://t.me/penek_story_bot" target="_blank" rel="noopener" class="contact-button bot">
+              <div class="contact-icon">🤖</div>
+              <div class="contact-content">
+                <h4>Интерактивный бот</h4>
+                <p>@penek_story_bot</p>
+                <span class="contact-desc">Игры и викторины</span>
+              </div>
+              <div class="contact-arrow">→</div>
+            </a>
+          </div>
+
+          <div class="contact-form-container">
+            <form class="contact-form-new" id="contactForm" novalidate>
+              <h3 class="form-title">Отправить сообщение</h3>
+              
+              <div class="form-group">
+                <label class="form-label">Ваше имя</label>
+                <input type="text" name="name" class="form-input" required placeholder="Как к вам обращаться?" />
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-input" required placeholder="your@email.com" />
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Сообщение</label>
+                <textarea name="message" class="form-textarea" required rows="5" placeholder="Расскажите, что вас интересует..."></textarea>
+              </div>
+              
+              <div class="form-footer">
+                <label class="form-checkbox">
+                  <input type="checkbox" name="agree" required />
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">Согласен(а) с обработкой персональных данных</span>
+                </label>
+                
+                <button type="submit" class="form-submit">
+                  <span>Отправить сообщение</span>
+                  <span class="submit-icon">✈️</span>
+                </button>
+              </div>
+              
+              <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -311,7 +804,7 @@
   </div>
 
   <!-- Лайтбокс -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр изображения">
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр изображения" style="display: none;">
     <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">×</button>
     <img class="lightbox-img" id="lightboxImg" alt="" />
     <p class="lightbox-caption" id="lightboxCaption"></p>
