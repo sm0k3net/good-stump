@@ -12,6 +12,15 @@
   --shadow:0 6px 24px rgba(31,42,38,.08), 0 2px 8px rgba(31,42,38,.06);
   --radius:16px;
 }
+  --primary-600:#256a4f;
+  --accent:#ff8a3d;
+  --accent-2:#ffb062;
+  --text:#1f2a26;
+  --muted:#5a6b63;
+  --white:#fff;
+  --shadow:0 6px 24px rgba(31,42,38,.08), 0 2px 8px rgba(31,42,38,.06);
+  --radius:16px;
+}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}

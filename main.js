@@ -48,6 +48,215 @@ navLinks.forEach(link => {
   });
 });
 
+// Hero Slider Implementation
+class HeroSlider {
+  constructor(containerSelector) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) return;
+    
+    this.slides = this.container.querySelectorAll('.slide');
+    this.dots = this.container.querySelectorAll('.dot');
+    this.prevBtn = this.container.querySelector('.slider-btn.prev');
+    this.nextBtn = this.container.querySelector('.slider-btn.next');
+    
+    this.currentSlide = 0;
+    this.init();
+  }
+  
+  init() {
+    this.showSlide(0);
+    this.bindEvents();
+    this.startAutoSlide();
+  }
+  
+  bindEvents() {
+    if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.previousSlide());
+    if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
+    
+    this.dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => this.goToSlide(index));
+    });
+  }
+  
+  showSlide(index) {
+    this.slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    
+    this.dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    
+    this.currentSlide = index;
+  }
+  
+  nextSlide() {
+    const next = (this.currentSlide + 1) % this.slides.length;
+    this.showSlide(next);
+  }
+  
+  previousSlide() {
+    const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.showSlide(prev);
+  }
+  
+  goToSlide(index) {
+    this.showSlide(index);
+  }
+  
+  startAutoSlide() {
+    setInterval(() => {
+      this.nextSlide();
+    }, 5000);
+  }
+}
+
+// Gallery Slider Implementation  
+class GallerySlider {
+  constructor(containerSelector) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) return;
+    
+    this.track = this.container.querySelector('.gallery-track');
+    this.slides = this.container.querySelectorAll('.gallery-slide');
+    this.prevBtn = this.container.querySelector('.gallery-btn.prev');
+    this.nextBtn = this.container.querySelector('.gallery-btn.next');
+    this.counter = this.container.querySelector('.gallery-counter');
+    
+    this.currentSlide = 0;
+    this.init();
+  }
+  
+  init() {
+    this.updateSlider();
+    this.bindEvents();
+  }
+  
+  bindEvents() {
+    if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.previousSlide());
+    if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
+    
+    // Touch/swipe support
+    let startX = 0;
+    this.track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+    
+    this.track.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          this.nextSlide();
+        } else {
+          this.previousSlide();
+        }
+      }
+    });
+  }
+  
+  updateSlider() {
+    const translateX = -this.currentSlide * 100;
+    this.track.style.transform = `translateX(${translateX}%)`;
+    
+    if (this.counter) {
+      this.counter.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+    }
+  }
+  
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    this.updateSlider();
+  }
+  
+  previousSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.updateSlider();
+  }
+}
+
+// Coloring Slider Implementation
+class ColoringSlider {
+  constructor(containerSelector) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) return;
+    
+    this.track = this.container.querySelector('.coloring-track');
+    this.slides = this.container.querySelectorAll('.coloring-slide');
+    this.prevBtn = this.container.querySelector('.coloring-nav-btn.prev');
+    this.nextBtn = this.container.querySelector('.coloring-nav-btn.next');
+    this.counter = this.container.querySelector('.coloring-counter');
+    
+    this.currentSlide = 0;
+    this.init();
+  }
+  
+  init() {
+    this.updateSlider();
+    this.bindEvents();
+  }
+  
+  bindEvents() {
+    if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.previousSlide());
+    if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
+    
+    // Print functionality
+    this.container.addEventListener('click', (e) => {
+      if (e.target.closest('.coloring-btn.print')) {
+        e.preventDefault();
+        this.printColoring(e.target.closest('.coloring-slide'));
+      }
+    });
+  }
+  
+  updateSlider() {
+    const translateX = -this.currentSlide * 100;
+    this.track.style.transform = `translateX(${translateX}%)`;
+    
+    if (this.counter) {
+      this.counter.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+    }
+  }
+  
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    this.updateSlider();
+  }
+  
+  previousSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.updateSlider();
+  }
+  
+  printColoring(slide) {
+    const img = slide.querySelector('img');
+    if (!img) return;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Раскраска - ${img.alt || 'Саня'}</title>
+          <style>
+            body { margin: 0; padding: 20px; text-align: center; }
+            img { max-width: 100%; height: auto; }
+            @media print {
+              body { margin: 0; padding: 0; }
+              img { width: 100%; page-break-inside: avoid; }
+            }
+          </style>
+        </head>
+        <body>
+          <img src="${img.src}" alt="${img.alt || 'Раскраска'}" />
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+}
+
 // Share buttons
 const shareData = {
   url: window.location.href,
@@ -230,4 +439,18 @@ window.addEventListener('beforeunload', () => {
   if (currentAudio) {
     currentAudio.pause();
   }
+});
+
+// Initialize sliders when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Hero Slider
+  new HeroSlider('.hero-slider');
+  
+  // Initialize Gallery Slider
+  new GallerySlider('.gallery-slider');
+  
+  // Initialize Coloring Slider
+  new ColoringSlider('.coloring-slider');
+  
+  console.log('🌳 Все слайдеры инициализированы!');
 });
