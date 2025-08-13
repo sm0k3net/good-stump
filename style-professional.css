@@ -770,6 +770,73 @@ p {
   margin: 0;
 }
 
+/* Стили для главной карточки About */
+.about-card.main-card {
+  max-width: 100%;
+  margin: 0 auto var(--space-xl) auto;
+}
+
+.about-card.main-card h3 {
+  text-align: center;
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-lg);
+  color: var(--forest-primary);
+}
+
+.about-card.main-card > p {
+  text-align: center;
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-xl);
+  color: var(--text-primary);
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.feature-row:last-child {
+  margin-bottom: 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--bg-panel);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-normal);
+}
+
+.feature-item:hover {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-top: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.feature-content h4 {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--forest-primary);
+}
+
+.feature-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 .about-visual {
   position: relative;
 }
