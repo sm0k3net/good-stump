@@ -444,6 +444,107 @@ window.addEventListener('beforeunload', () => {
 // Initialize sliders when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Hero Slider
+  const heroSlider = new HeroSlider('.hero-slider');
+  
+  // Initialize Gallery Slider
+  const gallerySlider = new GallerySlider('.gallery-slider');
+  
+  // Initialize Coloring Slider
+  const coloringSlider = new ColoringSlider('.coloring-slider');
+  
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxClose = document.getElementById('lightboxClose');
+  
+  // Function to open lightbox
+  window.viewImage = function(src, caption) {
+    lightboxImg.src = src;
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  
+  // Function to close lightbox
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+      closeLightbox();
+    }
+  });
+  
+  // Add click handlers for gallery images
+  document.querySelectorAll('.gallery-slide img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      const caption = img.closest('.gallery-slide').querySelector('.gallery-caption')?.textContent || img.alt;
+      viewImage(img.src, caption);
+    });
+  });
+  
+  // Coloring page functions
+  window.viewColoring = function(imageSrc, title) {
+    viewImage(imageSrc, title);
+  };
+  
+  // Contact form handling
+  const contactForm = document.getElementById('contactForm');
+  const formNote = document.getElementById('formNote');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Simple form validation
+      const formData = new FormData(contactForm);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const message = formData.get('message');
+      const agree = formData.get('agree');
+      
+      if (!name || !email || !message || !agree) {
+        showFormNote('Пожалуйста, заполните все поля и согласитесь с обработкой данных.', 'error');
+        return;
+      }
+      
+      // Simulate form submission
+      showFormNote('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.', 'success');
+      contactForm.reset();
+    });
+  }
+  
+  function showFormNote(message, type) {
+    formNote.textContent = message;
+    formNote.className = `form-note ${type}`;
+    formNote.style.background = type === 'success' ? '#d4edda' : '#f8d7da';
+    formNote.style.color = type === 'success' ? '#155724' : '#721c24';
+    formNote.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'}`;
+    
+    setTimeout(() => {
+      formNote.textContent = '';
+      formNote.className = 'form-note';
+      formNote.style.background = '';
+      formNote.style.color = '';
+      formNote.style.border = '';
+    }, 5000);
+  }
+});
+
+// Initialize sliders when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Hero Slider
   new HeroSlider('.hero-slider');
   
   // Initialize Gallery Slider
