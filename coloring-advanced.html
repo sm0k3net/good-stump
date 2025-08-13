@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Онлайн раскраска — Саня</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7faf8;
+      --panel: #eef6f1;
+      --primary: #2f7a5c;
+      --accent: #ff8a3d;
+      --text: #1f2a26;
+      --muted: #5a6b63;
+      --white: #fff;
+      --shadow: 0 6px 24px rgba(31,42,38,.08), 0 2px 8px rgba(31,42,38,.06);
+      --radius: 16px;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: white;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      font-family: "Comfortaa", cursive;
+      color: var(--primary);
+      margin: 0 0 10px;
+      font-size: clamp(24px, 4vw, 36px);
+    }
+    
+    .header p {
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+    
+    .nav-home {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-home:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .coloring-app {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+    
+    .coloring-controls {
+      background: white;
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+    
+    .controls-section {
+      margin-bottom: 25px;
+    }
+    
+    .controls-title {
+      font-family: "Comfortaa", cursive;
+      color: var(--primary);
+      margin: 0 0 15px;
+      font-size: 18px;
+    }
+    
+    .coloring-templates {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .template-btn {
+      border: 2px solid #e0e6e3;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      padding: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .template-btn:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+    
+    .template-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(255, 138, 61, 0.3);
+    }
+    
+    .template-preview {
+      width: 100%;
+      height: 70px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    
+    .template-name {
+      font-size: 12px;
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .color-btn {
+      width: 35px;
+      height: 35px;
+      border: 3px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .color-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .color-btn.active {
+      border-color: var(--primary);
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(47, 122, 92, 0.3);
+    }
+    
+    .brush-tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .brush-section h4 {
+      font-size: 14px;
+      color: var(--primary);
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    
+    .brush-sizes {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .brush-btn {
+      width: 35px;
+      height: 35px;
+      border: 2px solid #e0e6e3;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .brush-btn:hover {
+      border-color: var(--primary);
+    }
+    
+    .brush-btn.active {
+      border-color: var(--accent);
+      background: var(--panel);
+    }
+    
+    .brush-circle {
+      background: var(--text);
+      border-radius: 50%;
+    }
+    
+    .brush-types {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .brush-type-btn {
+      padding: 8px 12px;
+      border: 2px solid #e0e6e3;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .brush-type-btn:hover {
+      border-color: var(--primary);
+    }
+    
+    .brush-type-btn.active {
+      border-color: var(--accent);
+      background: var(--panel);
+    }
+    
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .action-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .action-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .action-btn.clear {
+      background: #e74c3c;
+    }
+    
+    .action-btn.clear:hover {
+      background: #c0392b;
+    }
+    
+    .action-btn.print {
+      background: #3498db;
+    }
+    
+    .action-btn.print:hover {
+      background: #2980b9;
+    }
+    
+    .special-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .canvas-container {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      min-height: 600px;
+      position: relative;
+    }
+    
+    .canvas-wrapper {
+      position: relative;
+      display: inline-block;
+      border: 3px solid var(--panel);
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+    }
+    
+    #coloringCanvas {
+      display: block;
+      cursor: crosshair;
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .canvas-info {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--muted);
+      font-size: 18px;
+    }
+    
+    .opacity-slider {
+      margin-top: 15px;
+    }
+    
+    .opacity-slider label {
+      display: block;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .opacity-slider input {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #ddd;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .opacity-slider input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(255,138,61,0.3);
+    }
+    
+    @media (max-width: 1100px) {
+      .coloring-app {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .coloring-controls {
+        position: static;
+        order: 2;
+        max-height: none;
+      }
+      
+      .canvas-container {
+        order: 1;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .coloring-app {
+        padding: 0 15px;
+      }
+      
+      .coloring-controls {
+        padding: 20px;
+      }
+      
+      .canvas-container {
+        padding: 20px;
+      }
+      
+      .color-palette {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      .brush-tools {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>🎨 Онлайн раскраска</h1>
+    <p>Раскрашивайте картинки с добрым пеньком Саней прямо в браузере!</p>
+    <a href="index.html" class="nav-home">
+      🏠 На главную
+    </a>
+  </header>
+
+  <div class="coloring-app">
+    <div class="coloring-controls">
+      <!-- Выбор шаблона -->
+      <div class="controls-section">
+        <h3 class="controls-title">Выберите картинку</h3>
+        <div class="coloring-templates">
+          <button class="template-btn active" data-template="sanya-stump">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🪵🌱</div>
+            <div class="template-name">Пенёк Саня</div>
+          </button>
+          <button class="template-btn" data-template="forest-rescue">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🐿️🆘</div>
+            <div class="template-name">Спасение белочки</div>
+          </button>
+          <button class="template-btn" data-template="forest-cleanup">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🗑️♻️</div>
+            <div class="template-name">Уборка полянки</div>
+          </button>
+          <button class="template-btn" data-template="forest-friends">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🐿️🦝</div>
+            <div class="template-name">Лесные друзья</div>
+          </button>
+          <button class="template-btn" data-template="forest-home">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🏠🌲</div>
+            <div class="template-name">Домик Сани</div>
+          </button>
+          <button class="template-btn" data-template="forest-path">
+            <div class="template-preview" style="background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04)); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌿🛤️</div>
+            <div class="template-name">Лесная тропа</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Палитра цветов -->
+      <div class="controls-section">
+        <h3 class="controls-title">Выберите цвет</h3>
+        <div class="color-palette">
+          <button class="color-btn active" style="background-color: #ff6b6b" data-color="#ff6b6b" title="Красный"></button>
+          <button class="color-btn" style="background-color: #4ecdc4" data-color="#4ecdc4" title="Бирюзовый"></button>
+          <button class="color-btn" style="background-color: #45b7d1" data-color="#45b7d1" title="Голубой"></button>
+          <button class="color-btn" style="background-color: #96ceb4" data-color="#96ceb4" title="Зелёный"></button>
+          <button class="color-btn" style="background-color: #ffeaa7" data-color="#ffeaa7" title="Жёлтый"></button>
+          <button class="color-btn" style="background-color: #dda0dd" data-color="#dda0dd" title="Сиреневый"></button>
+          <button class="color-btn" style="background-color: #ff8a3d" data-color="#ff8a3d" title="Оранжевый"></button>
+          <button class="color-btn" style="background-color: #2f7a5c" data-color="#2f7a5c" title="Лесной"></button>
+          <button class="color-btn" style="background-color: #8b4513" data-color="#8b4513" title="Коричневый"></button>
+          <button class="color-btn" style="background-color: #ffc0cb" data-color="#ffc0cb" title="Розовый"></button>
+          <button class="color-btn" style="background-color: #333" data-color="#333" title="Чёрный"></button>
+          <button class="color-btn" style="background-color: #fff; border-color: #ccc" data-color="#fff" title="Белый"></button>
+          <button class="color-btn" style="background-color: #a0522d" data-color="#a0522d" title="Коричневый тёмный"></button>
+          <button class="color-btn" style="background-color: #90ee90" data-color="#90ee90" title="Светло-зелёный"></button>
+          <button class="color-btn" style="background-color: #87ceeb" data-color="#87ceeb" title="Небесно-голубой"></button>
+          <button class="color-btn" style="background-color: #daa520" data-color="#daa520" title="Золотой"></button>
+          <button class="color-btn" style="background-color: #9370db" data-color="#9370db" title="Фиолетовый"></button>
+          <button class="color-btn" style="background-color: #32cd32" data-color="#32cd32" title="Лаймовый"></button>
+        </div>
+      </div>
+
+      <!-- Инструменты рисования -->
+      <div class="controls-section">
+        <h3 class="controls-title">Инструменты</h3>
+        <div class="brush-tools">
+          <div class="brush-section">
+            <h4>Размер</h4>
+            <div class="brush-sizes">
+              <button class="brush-btn" data-size="2">
+                <div class="brush-circle" style="width: 4px; height: 4px;"></div>
+              </button>
+              <button class="brush-btn" data-size="5">
+                <div class="brush-circle" style="width: 8px; height: 8px;"></div>
+              </button>
+              <button class="brush-btn active" data-size="10">
+                <div class="brush-circle" style="width: 12px; height: 12px;"></div>
+              </button>
+              <button class="brush-btn" data-size="20">
+                <div class="brush-circle" style="width: 16px; height: 16px;"></div>
+              </button>
+              <button class="brush-btn" data-size="30">
+                <div class="brush-circle" style="width: 20px; height: 20px;"></div>
+              </button>
+            </div>
+          </div>
+          
+          <div class="brush-section">
+            <h4>Тип</h4>
+            <div class="brush-types">
+              <button class="brush-type-btn active" data-type="round" title="Круглая кисть">⚫</button>
+              <button class="brush-type-btn" data-type="square" title="Квадратная кисть">⬛</button>
+              <button class="brush-type-btn" data-type="spray" title="Аэрограф">💨</button>
+              <button class="brush-type-btn" data-type="eraser" title="Ластик">🧽</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="opacity-slider">
+          <label for="opacitySlider">Прозрачность: <span id="opacityValue">100</span>%</label>
+          <input type="range" id="opacitySlider" min="10" max="100" value="100">
+        </div>
+      </div>
+
+      <!-- Действия -->
+      <div class="controls-section">
+        <h3 class="controls-title">Действия</h3>
+        <div class="action-buttons">
+          <button class="action-btn" id="saveBtn">
+            💾 Сохранить
+          </button>
+          <button class="action-btn print" id="printBtn">
+            🖨️ Печать
+          </button>
+        </div>
+        <div class="special-actions">
+          <button class="action-btn clear" id="clearBtn">
+            🗑️ Очистить всё
+          </button>
+          <button class="action-btn" id="undoBtn">
+            ↶ Отменить
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <div class="loading" id="loading">Загружаем раскраску...</div>
+      <div class="canvas-wrapper" id="canvasWrapper" style="display: none;">
+        <canvas id="coloringCanvas" width="700" height="700"></canvas>
+      </div>
+      <div class="canvas-info">
+        Выберите цвет и инструмент, затем начните раскрашивать! Используйте мышь или палец на сенсорном экране.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class AdvancedColoringApp {
+      constructor() {
+        this.canvas = document.getElementById('coloringCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.currentColor = '#ff6b6b';
+        this.currentSize = 10;
+        this.currentTemplate = 'sanya-stump';
+        this.currentTool = 'round';
+        this.currentOpacity = 1.0;
+        this.isDrawing = false;
+        this.lastX = 0;
+        this.lastY = 0;
+        this.templates = this.generateTemplates();
+        this.undoStack = [];
+        this.maxUndoSteps = 10;
+        
+        this.init();
+      }
+      
+      init() {
+        this.setupEventListeners();
+        this.loadTemplate(this.currentTemplate);
+        this.saveState();
+      }
+      
+      generateTemplates() {
+        return {
+          'sanya-stump': this.generateSanyaStump(),
+          'forest-rescue': this.generateForestRescue(),
+          'forest-cleanup': this.generateForestCleanup(),
+          'forest-friends': this.generateForestFriends(),
+          'forest-home': this.generateForestHome(),
+          'forest-path': this.generateForestPath()
+        };
+      }
+      
+      generateSanyaStump() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 4;
+        
+        // Пенёк-тело Сани
+        ctx.beginPath();
+        ctx.roundRect(250, 350, 200, 250, 20);
+        ctx.stroke();
+        
+        // Годовые кольца пенька
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.ellipse(350, 420, 80 - i * 20, 60 - i * 15, 0, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+        
+        // Лицо на пеньке
+        ctx.beginPath();
+        ctx.arc(320, 380, 8, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(380, 380, 8, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Улыбка
+        ctx.beginPath();
+        ctx.arc(350, 420, 25, 0, Math.PI);
+        ctx.stroke();
+        
+        // Шляпка
+        ctx.beginPath();
+        ctx.ellipse(350, 320, 60, 20, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.roundRect(320, 300, 60, 40, 10);
+        ctx.stroke();
+        
+        // Росток на макушке
+        ctx.beginPath();
+        ctx.moveTo(350, 280);
+        ctx.lineTo(350, 250);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.ellipse(340, 260, 8, 12, -0.3, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.ellipse(360, 260, 8, 12, 0.3, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Руки-ветки
+        ctx.beginPath();
+        ctx.moveTo(250, 420);
+        ctx.lineTo(180, 400);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(450, 420);
+        ctx.lineTo(520, 400);
+        ctx.stroke();
+        
+        return canvas;
+      }
+      
+      generateForestRescue() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 4;
+        
+        // Саня (упрощённый)
+        ctx.beginPath();
+        ctx.roundRect(150, 400, 80, 120, 15);
+        ctx.stroke();
+        
+        // Белочка в ловушке
+        ctx.beginPath();
+        ctx.arc(450, 350, 40, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Хвост белочки
+        ctx.beginPath();
+        ctx.arc(480, 320, 25, 0, Math.PI);
+        ctx.stroke();
+        
+        // Ловушка
+        ctx.beginPath();
+        ctx.rect(420, 380, 60, 20);
+        ctx.stroke();
+        
+        // Механизм ловушки
+        ctx.beginPath();
+        ctx.moveTo(420, 380);
+        ctx.lineTo(400, 360);
+        ctx.stroke();
+        
+        // Деревья вокруг
+        for (let i = 0; i < 4; i++) {
+          const x = 100 + i * 150;
+          const y = 200;
+          
+          ctx.beginPath();
+          ctx.rect(x, y, 20, 100);
+          ctx.stroke();
+          
+          ctx.beginPath();
+          ctx.arc(x + 10, y - 10, 35, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+        
+        return canvas;
+      }
+      
+      generateForestCleanup() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 4;
+        
+        // Саня с мешком для мусора
+        ctx.beginPath();
+        ctx.roundRect(200, 350, 80, 120, 15);
+        ctx.stroke();
+        
+        // Мешок для мусора
+        ctx.beginPath();
+        ctx.roundRect(320, 380, 60, 80, 10);
+        ctx.stroke();
+        
+        // Мусор на полянке
+        ctx.beginPath();
+        ctx.rect(150, 500, 30, 20);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(450, 520, 15, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.rect(350, 550, 25, 15);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.rect(500, 480, 20, 30);
+        ctx.stroke();
+        
+        // Полянка
+        ctx.beginPath();
+        ctx.ellipse(350, 550, 200, 80, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Цветы на полянке
+        for (let i = 0; i < 5; i++) {
+          const x = 200 + i * 60;
+          const y = 600 + Math.random() * 40;
+          
+          ctx.beginPath();
+          ctx.arc(x, y, 8, 0, 2 * Math.PI);
+          ctx.stroke();
+          
+          for (let j = 0; j < 6; j++) {
+            const angle = (j * Math.PI) / 3;
+            const px = x + Math.cos(angle) * 15;
+            const py = y + Math.sin(angle) * 15;
+            
+            ctx.beginPath();
+            ctx.arc(px, py, 5, 0, 2 * Math.PI);
+            ctx.stroke();
+          }
+        }
+        
+        return canvas;
+      }
+      
+      generateForestFriends() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 4;
+        
+        // Саня
+        ctx.beginPath();
+        ctx.roundRect(250, 350, 80, 120, 15);
+        ctx.stroke();
+        
+        // Белочка
+        ctx.beginPath();
+        ctx.arc(150, 380, 35, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(170, 360, 20, 0, Math.PI);
+        ctx.stroke();
+        
+        // Енот
+        ctx.beginPath();
+        ctx.arc(450, 400, 40, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Полоски енота
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.arc(450, 400, 30 - i * 10, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+        
+        // Ёжик
+        ctx.beginPath();
+        ctx.arc(350, 520, 30, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Иголки ёжика
+        for (let i = 0; i < 10; i++) {
+          const angle = (i * Math.PI) / 5;
+          const x1 = 350 + Math.cos(angle) * 30;
+          const y1 = 520 + Math.sin(angle) * 30;
+          const x2 = 350 + Math.cos(angle) * 45;
+          const y2 = 520 + Math.sin(angle) * 45;
+          
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+        }
+        
+        return canvas;
+      }
+      
+      generateForestHome() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 4;
+        
+        // Основа домика
+        ctx.beginPath();
+        ctx.roundRect(250, 350, 200, 200, 20);
+        ctx.stroke();
+        
+        // Крыша
+        ctx.beginPath();
+        ctx.moveTo(220, 350);
+        ctx.lineTo(350, 250);
+        ctx.lineTo(480, 350);
+        ctx.closePath();
+        ctx.stroke();
+        
+        // Дверь
+        ctx.beginPath();
+        ctx.roundRect(320, 450, 60, 100, 10);
+        ctx.stroke();
+        
+        // Ручка двери
+        ctx.beginPath();
+        ctx.arc(370, 500, 3, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Окна
+        ctx.beginPath();
+        ctx.roundRect(270, 380, 40, 40, 5);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.roundRect(390, 380, 40, 40, 5);
+        ctx.stroke();
+        
+        // Перекрестия окон
+        ctx.beginPath();
+        ctx.moveTo(290, 380);
+        ctx.lineTo(290, 420);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(270, 400);
+        ctx.lineTo(310, 400);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(410, 380);
+        ctx.lineTo(410, 420);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(390, 400);
+        ctx.lineTo(430, 400);
+        ctx.stroke();
+        
+        // Дерево рядом с домом
+        ctx.beginPath();
+        ctx.rect(500, 400, 25, 150);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(512, 380, 45, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        return canvas;
+      }
+      
+      generateForestPath() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 700;
+        canvas.height = 700;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 700, 700);
+        
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 6;
+        
+        // Извилистая тропинка
+        ctx.beginPath();
+        ctx.moveTo(100, 650);
+        ctx.quadraticCurveTo(300, 500, 200, 350);
+        ctx.quadraticCurveTo(100, 200, 350, 150);
+        ctx.quadraticCurveTo(600, 100, 500, 50);
+        ctx.stroke();
+        
+        ctx.lineWidth = 4;
+        
+        // Деревья вдоль тропинки
+        for (let i = 0; i < 8; i++) {
+          const x = 150 + (i % 4) * 120 + Math.random() * 40;
+          const y = 200 + Math.floor(i / 4) * 200 + Math.random() * 60;
+          
+          // Ствол
+          ctx.beginPath();
+          ctx.rect(x - 8, y, 16, 60);
+          ctx.stroke();
+          
+          // Крона
+          ctx.beginPath();
+          ctx.arc(x, y - 15, 35, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+        
+        // Кусты
+        for (let i = 0; i < 6; i++) {
+          const x = 100 + i * 100;
+          const y = 400 + Math.random() * 200;
+          
+          ctx.beginPath();
+          ctx.arc(x, y, 20, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+        
+        return canvas;
+      }
+      
+      setupEventListeners() {
+        // Цвета
+        document.querySelectorAll('.color-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelector('.color-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            this.currentColor = btn.dataset.color;
+          });
+        });
+        
+        // Размер кисти
+        document.querySelectorAll('.brush-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelector('.brush-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            this.currentSize = parseInt(btn.dataset.size);
+          });
+        });
+        
+        // Тип кисти
+        document.querySelectorAll('.brush-type-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelector('.brush-type-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            this.currentTool = btn.dataset.type;
+          });
+        });
+        
+        // Прозрачность
+        const opacitySlider = document.getElementById('opacitySlider');
+        const opacityValue = document.getElementById('opacityValue');
+        opacitySlider.addEventListener('input', (e) => {
+          this.currentOpacity = e.target.value / 100;
+          opacityValue.textContent = e.target.value;
+        });
+        
+        // Шаблоны
+        document.querySelectorAll('.template-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelector('.template-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            this.currentTemplate = btn.dataset.template;
+            this.loadTemplate(this.currentTemplate);
+          });
+        });
+        
+        // Рисование
+        this.canvas.addEventListener('mousedown', this.startDrawing.bind(this));
+        this.canvas.addEventListener('mousemove', this.draw.bind(this));
+        this.canvas.addEventListener('mouseup', this.stopDrawing.bind(this));
+        this.canvas.addEventListener('mouseout', this.stopDrawing.bind(this));
+        
+        // Сенсорные события
+        this.canvas.addEventListener('touchstart', this.handleTouch.bind(this));
+        this.canvas.addEventListener('touchmove', this.handleTouch.bind(this));
+        this.canvas.addEventListener('touchend', this.stopDrawing.bind(this));
+        
+        // Кнопки действий
+        document.getElementById('saveBtn').addEventListener('click', this.saveImage.bind(this));
+        document.getElementById('printBtn').addEventListener('click', this.printImage.bind(this));
+        document.getElementById('clearBtn').addEventListener('click', this.clearCanvas.bind(this));
+        document.getElementById('undoBtn').addEventListener('click', this.undo.bind(this));
+      }
+      
+      loadTemplate(templateName) {
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('canvasWrapper').style.display = 'none';
+        
+        setTimeout(() => {
+          const template = this.templates[templateName];
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.ctx.drawImage(template, 0, 0);
+          
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('canvasWrapper').style.display = 'inline-block';
+          
+          this.saveState();
+        }, 500);
+      }
+      
+      startDrawing(e) {
+        this.isDrawing = true;
+        const rect = this.canvas.getBoundingClientRect();
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        
+        this.lastX = (e.clientX - rect.left) * scaleX;
+        this.lastY = (e.clientY - rect.top) * scaleY;
+        
+        this.draw(e);
+      }
+      
+      draw(e) {
+        if (!this.isDrawing) return;
+        
+        const rect = this.canvas.getBoundingClientRect();
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+        
+        this.ctx.globalAlpha = this.currentOpacity;
+        
+        if (this.currentTool === 'eraser') {
+          this.ctx.globalCompositeOperation = 'destination-out';
+        } else {
+          this.ctx.globalCompositeOperation = 'source-over';
+        }
+        
+        if (this.currentTool === 'spray') {
+          this.sprayPaint(x, y);
+        } else {
+          this.ctx.fillStyle = this.currentColor;
+          this.ctx.beginPath();
+          
+          if (this.currentTool === 'square') {
+            this.ctx.fillRect(x - this.currentSize/2, y - this.currentSize/2, this.currentSize, this.currentSize);
+          } else {
+            this.ctx.arc(x, y, this.currentSize, 0, 2 * Math.PI);
+            this.ctx.fill();
+          }
+          
+          // Линия для плавного рисования
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.lastX, this.lastY);
+          this.ctx.lineTo(x, y);
+          this.ctx.lineWidth = this.currentSize * 2;
+          this.ctx.lineCap = 'round';
+          this.ctx.strokeStyle = this.currentColor;
+          this.ctx.stroke();
+        }
+        
+        this.lastX = x;
+        this.lastY = y;
+      }
+      
+      sprayPaint(x, y) {
+        const density = 20;
+        for (let i = 0; i < density; i++) {
+          const offsetX = (Math.random() - 0.5) * this.currentSize * 2;
+          const offsetY = (Math.random() - 0.5) * this.currentSize * 2;
+          
+          this.ctx.fillStyle = this.currentColor;
+          this.ctx.beginPath();
+          this.ctx.arc(x + offsetX, y + offsetY, 1, 0, 2 * Math.PI);
+          this.ctx.fill();
+        }
+      }
+      
+      stopDrawing() {
+        if (this.isDrawing) {
+          this.isDrawing = false;
+          this.saveState();
+        }
+      }
+      
+      handleTouch(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                         e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+          clientX: touch.clientX,
+          clientY: touch.clientY
+        });
+        this.canvas.dispatchEvent(mouseEvent);
+      }
+      
+      saveState() {
+        this.undoStack.push(this.canvas.toDataURL());
+        if (this.undoStack.length > this.maxUndoSteps) {
+          this.undoStack.shift();
+        }
+      }
+      
+      undo() {
+        if (this.undoStack.length > 1) {
+          this.undoStack.pop(); // Убираем текущее состояние
+          const previousState = this.undoStack[this.undoStack.length - 1];
+          
+          const img = new Image();
+          img.onload = () => {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.drawImage(img, 0, 0);
+          };
+          img.src = previousState;
+        }
+      }
+      
+      clearCanvas() {
+        if (confirm('Вы уверены, что хотите очистить раскраску?')) {
+          this.loadTemplate(this.currentTemplate);
+        }
+      }
+      
+      saveImage() {
+        const link = document.createElement('a');
+        link.download = `sanya-coloring-${this.currentTemplate}-${Date.now()}.png`;
+        link.href = this.canvas.toDataURL();
+        link.click();
+      }
+      
+      printImage() {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Раскраска для печати</title>
+            <style>
+              @page { margin: 1cm; size: A4; }
+              body { margin: 0; text-align: center; }
+              img { max-width: 100%; height: auto; }
+            </style>
+          </head>
+          <body>
+            <img src="${this.canvas.toDataURL()}" alt="Раскраска">
+          </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+      }
+    }
+    
+    // Запуск приложения
+    document.addEventListener('DOMContentLoaded', () => {
+      new AdvancedColoringApp();
+    });
+  </script>
+</body>
+</html>

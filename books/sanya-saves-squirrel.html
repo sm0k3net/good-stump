@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Саня спасает белочку — Детская книга</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7faf8;
+      --primary: #2f7a5c;
+      --accent: #ff8a3d;
+      --text: #1f2a26;
+      --muted: #5a6b63;
+      --white: #fff;
+      --shadow: 0 6px 24px rgba(31,42,38,.08), 0 2px 8px rgba(31,42,38,.06);
+      --radius: 16px;
+      --page-bg: linear-gradient(135deg, #fff 0%, #f9fcfa 100%);
+    }
+    
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    .book-container {
+      max-width: 900px;
+      margin: 0 auto;
+      perspective: 1000px;
+      padding: 20px;
+    }
+    
+    .book-wrapper {
+      position: relative;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 
+        0 10px 40px rgba(31,42,38,.12),
+        0 4px 12px rgba(31,42,38,.08),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+      overflow: hidden;
+    }
+    
+    .book-spine {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .page {
+      display: none;
+      padding: 50px 60px;
+      min-height: 600px;
+      background: var(--page-bg);
+      position: relative;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      transform-origin: left center;
+      transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    
+    .page.active {
+      display: block;
+      animation: pageFlip 0.6s ease-out;
+    }
+    
+    .page.flipping-out {
+      animation: pageFlipOut 0.6s ease-in;
+      transform: rotateY(-180deg);
+    }
+    
+    @keyframes pageFlip {
+      from {
+        transform: rotateY(180deg);
+        opacity: 0;
+      }
+      to {
+        transform: rotateY(0deg);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes pageFlipOut {
+      from {
+        transform: rotateY(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: rotateY(-180deg);
+        opacity: 0;
+      }
+    }
+    
+    .page::before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(47,122,92,0.1) 20%, rgba(47,122,92,0.1) 80%, transparent);
+    }
+    
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(47,122,92,.08), rgba(255,138,61,.06));
+      border-radius: var(--radius);
+      border: 2px solid rgba(47,122,92,.1);
+    }
+    
+    .book-title {
+      font-family: "Comfortaa", cursive;
+      font-size: clamp(28px, 5vw, 42px);
+      color: var(--primary);
+      margin: 0 0 15px;
+      text-shadow: 0 2px 4px rgba(47,122,92,0.1);
+    }
+    
+    .book-subtitle {
+      font-size: clamp(16px, 3vw, 20px);
+      color: var(--accent);
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .page-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .page-number {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    
+    .story-text {
+      font-size: clamp(18px, 2.5vw, 22px);
+      line-height: 1.8;
+      margin-bottom: 30px;
+      text-align: justify;
+      color: var(--text);
+    }
+    
+    .story-text.large {
+      font-size: clamp(20px, 3vw, 26px);
+      text-align: center;
+      margin: 40px 0;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .illustration {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, rgba(47,122,92,.06), rgba(255,138,61,.04));
+      border: 3px solid rgba(47,122,92,.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      margin: 30px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .illustration::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .navigation {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(47,122,92,.1);
+    }
+    
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 120px;
+      justify-content: center;
+    }
+    
+    .nav-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,138,61,0.3);
+    }
+    
+    .nav-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .page-info {
+      background: var(--primary);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .home-btn {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(47,122,92,.1);
+    }
+    
+    .home-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .download-btn {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255,138,61,.2);
+    }
+    
+    .download-btn:hover {
+      background: #ff7a2d;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,138,61,0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .book-container { padding: 10px; }
+      .page { padding: 30px 25px; min-height: 500px; }
+      .navigation { bottom: 20px; padding: 12px 20px; }
+      .nav-btn { padding: 10px 16px; min-width: 100px; font-size: 14px; }
+      .home-btn, .download-btn { top: 20px; padding: 10px 16px; font-size: 14px; }
+    }
+    
+    .moral-box {
+      background: linear-gradient(135deg, rgba(47,122,92,.08), rgba(255,138,61,.06));
+      border: 2px solid rgba(47,122,92,.15);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .moral-title {
+      font-family: "Comfortaa", cursive;
+      color: var(--primary);
+      font-size: 20px;
+      margin: 0 0 15px;
+    }
+    
+    .moral-text {
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="home-btn">
+    🏠 На главную
+  </a>
+  
+  <a href="#" class="download-btn" id="downloadBtn">
+    📚 Скачать PDF
+  </a>
+
+  <div class="book-container">
+    <div class="book-wrapper">
+      <div class="book-spine"></div>
+      
+      <!-- Страница 1: Обложка -->
+      <div class="page active">
+        <div class="page-header">
+          <h1 class="book-title">Саня спасает белочку</h1>
+          <p class="book-subtitle">История о доброте и взаимопомощи</p>
+        </div>
+        <div class="illustration">🌳🐿️🪓</div>
+        <div class="page-number">1</div>
+      </div>
+
+      <!-- Страница 2 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            В самом сердце густого зелёного леса, где высокие сосны шептались с ветром, 
+            а солнечные лучи играли в прятки между листьями, стоял небольшой домик. 
+            А рядом с домиком, на старой лесной тропинке, жил добрый пенёк по имени Саня.
+          </p>
+          <div class="illustration">🏠🌲</div>
+          <p class="story-text">
+            У Сани была особенная шляпка синего цвета и тёплый оранжевый свитер. 
+            А самое удивительное — на его макушке рос маленький зелёный росток, 
+            который означал, что Саня связан с природой особенной дружбой.
+          </p>
+        </div>
+        <div class="page-number">2</div>
+      </div>
+
+      <!-- Страница 3 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Каждое утро Саня просыпался с первыми лучами солнца и готовился к новому дню. 
+            Он знал, что в лесу всегда найдётся кто-то, кому нужна помощь. 
+            Ведь быть добрым пеньком — это не просто жить в лесу, 
+            а заботиться о всех его обитателях.
+          </p>
+          <div class="illustration">☀️🌱</div>
+          <p class="story-text">
+            В то утро Саня услышал странные звуки из глубины леса. 
+            Кто-то плакал! Не раздумывая ни секунды, добрый пенёк 
+            отправился на помощь, шагая по знакомой тропинке.
+          </p>
+        </div>
+        <div class="page-number">3</div>
+      </div>
+
+      <!-- Страница 4 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Звуки становились всё громче. Саня внимательно прислушивался 
+            и вскоре понял — это плачет белочка! Он поспешил на её зов 
+            и увидел печальную картину.
+          </p>
+          <div class="illustration">🐿️😢🪤</div>
+          <p class="story-text">
+            Маленькая рыжая белочка попала лапкой в ловушку, которую оставили 
+            в лесу охотники. Она пыталась освободиться, но ловушка держала крепко. 
+            Белочка была испугана и не знала, что делать.
+          </p>
+          <p class="story-text">
+            "Не плачь, малышка, — сказал Саня добрым голосом. — Я тебе помогу!"
+          </p>
+        </div>
+        <div class="page-number">4</div>
+      </div>
+
+      <!-- Страница 5 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Саня внимательно осмотрел ловушку. Она была сделана из металла 
+            и защёлкивалась очень туго. Просто так её не откроешь! 
+            Но Саня не сдавался — он был очень упорным и находчивым.
+          </p>
+          <div class="illustration">🔧🤔</div>
+          <p class="story-text">
+            "Нужно найти способ открыть эту ловушку, — размышлял Саня. — 
+            Может быть, если найти крепкую веточку и использовать её как рычаг?.."
+          </p>
+          <p class="story-text">
+            Саня отправился искать подходящую веточку. Он проверил много веток, 
+            но они были либо слишком тонкими, либо слишком короткими.
+          </p>
+        </div>
+        <div class="page-number">5</div>
+      </div>
+
+      <!-- Страница 6 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Вдруг к ним подбежал ёжик. "Что случилось?" — спросил он, 
+            увидев белочку в ловушке и Саню, который искал решение.
+          </p>
+          <div class="illustration">🦔🤝</div>
+          <p class="story-text">
+            "Белочка попала в ловушку, а я ищу способ её освободить," — объяснил Саня.
+          </p>
+          <p class="story-text">
+            "А я знаю, где растёт очень крепкий дуб! — воскликнул ёжик. — 
+            Там есть ветки, которые точно подойдут!" И он быстро побежал за веткой, 
+            показывая, как важно помогать друг другу.
+          </p>
+        </div>
+        <div class="page-number">6</div>
+      </div>
+
+      <!-- Страница 7 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Вскоре к ним присоединился мудрый енот. Он внимательно осмотрел ловушку 
+            и сказал: "Я знаю, как работают такие ловушки. Нужно одновременно 
+            нажать с двух сторон, тогда она откроется."
+          </p>
+          <div class="illustration">🦝🧠</div>
+          <p class="story-text">
+            Когда ёжик вернулся с крепкой веткой, у друзей был готов план. 
+            Саня и енот взялись за ветку с двух сторон, а ёжик подбадривал белочку: 
+            "Не переживай, мы сейчас тебя освободим!"
+          </p>
+        </div>
+        <div class="page-number">7</div>
+      </div>
+
+      <!-- Страница 8 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            Друзья дружно нажали на рычаги ловушки. "Раз, два, три!" — 
+            командовал Саня. Ловушка медленно начала раскрываться.
+          </p>
+          <div class="illustration">💪✨</div>
+          <p class="story-text">
+            "Получается! — радостно воскликнула белочка. — Ещё чуть-чуть!"
+          </p>
+          <p class="story-text">
+            С последним усилием ловушка открылась, и белочка быстро освободила лапку. 
+            Она была свободна! Лапка была немного поцарапана, но ничего серьёзного.
+          </p>
+        </div>
+        <div class="page-number">8</div>
+      </div>
+
+      <!-- Страница 9 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            "Спасибо вам огромное! — сказала белочка, обнимая каждого из спасителей. — 
+            Если бы не ваша помощь, я бы не знала, что делать!"
+          </p>
+          <div class="illustration">🤗❤️</div>
+          <p class="story-text">
+            "Мы всегда поможем друг другу, — ответил Саня. — 
+            В нашем лесу никто не остаётся в беде. А теперь давайте уберём 
+            эту ловушку, чтобы больше никто в неё не попал."
+          </p>
+          <p class="story-text">
+            Друзья вместе спрятали ловушку подальше от тропинок, 
+            где она никому не причинит вреда.
+          </p>
+        </div>
+        <div class="page-number">9</div>
+      </div>
+
+      <!-- Страница 10 -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text">
+            С тех пор белочка, ёжик, енот и Саня стали ещё более крепкими друзьями. 
+            Каждый день они встречались на полянке и делились новостями. 
+            А если кому-то требовалась помощь, все спешили на выручку.
+          </p>
+          <div class="illustration">🌈🌳👫</div>
+          <p class="story-text">
+            Саня понял, что самое важное в жизни — это быть готовым помочь тому, 
+            кто попал в беду. А белочка навсегда запомнила, 
+            как важно иметь таких верных друзей.
+          </p>
+        </div>
+        <div class="page-number">10</div>
+      </div>
+
+      <!-- Страница 11 -->
+      <div class="page">
+        <div class="page-content">
+          <div class="moral-box">
+            <h3 class="moral-title">Что мы узнали из этой истории:</h3>
+            <p class="moral-text">
+              ✨ Настоящие друзья всегда приходят на помощь<br>
+              ✨ Вместе мы можем решить любую проблему<br>
+              ✨ Доброта и упорство помогают преодолеть трудности<br>
+              ✨ Важно заботиться о природе и её обитателях
+            </p>
+          </div>
+          <div class="illustration">🌟📖💝</div>
+        </div>
+        <div class="page-number">11</div>
+      </div>
+
+      <!-- Страница 12: Финал -->
+      <div class="page">
+        <div class="page-content">
+          <p class="story-text large">
+            Конец истории
+          </p>
+          <div class="illustration">📚🌳❤️</div>
+          <p class="story-text" style="text-align: center; font-style: italic; color: var(--muted);">
+            Увидимся в следующей истории о добром пеньке Сане 
+            и его лесных друзьях!
+          </p>
+        </div>
+        <div class="page-number">12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <button class="nav-btn" id="prevBtn" disabled>
+      ← Назад
+    </button>
+    <div class="page-info">
+      <span>📖</span>
+      <span id="pageInfo">1 из 12</span>
+    </div>
+    <button class="nav-btn" id="nextBtn">
+      Вперёд →
+    </button>
+  </div>
+
+  <script>
+    class BookReader {
+      constructor() {
+        this.currentPage = 0;
+        this.totalPages = document.querySelectorAll('.page').length;
+        this.pages = document.querySelectorAll('.page');
+        this.prevBtn = document.getElementById('prevBtn');
+        this.nextBtn = document.getElementById('nextBtn');
+        this.pageInfo = document.getElementById('pageInfo');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        
+        this.init();
+      }
+      
+      init() {
+        this.prevBtn.addEventListener('click', () => this.prevPage());
+        this.nextBtn.addEventListener('click', () => this.nextPage());
+        this.downloadBtn.addEventListener('click', () => this.downloadPDF());
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') this.prevPage();
+          if (e.key === 'ArrowRight') this.nextPage();
+        });
+        
+        this.updateNavigation();
+      }
+      
+      showPage(pageIndex) {
+        if (pageIndex < 0 || pageIndex >= this.totalPages) return;
+        
+        const currentPageEl = this.pages[this.currentPage];
+        const newPageEl = this.pages[pageIndex];
+        
+        if (pageIndex > this.currentPage) {
+          currentPageEl.classList.add('flipping-out');
+          setTimeout(() => {
+            currentPageEl.classList.remove('active', 'flipping-out');
+            newPageEl.classList.add('active');
+          }, 300);
+        } else {
+          currentPageEl.classList.remove('active');
+          newPageEl.classList.add('active');
+        }
+        
+        this.currentPage = pageIndex;
+        this.updateNavigation();
+      }
+      
+      nextPage() {
+        if (this.currentPage < this.totalPages - 1) {
+          this.showPage(this.currentPage + 1);
+        }
+      }
+      
+      prevPage() {
+        if (this.currentPage > 0) {
+          this.showPage(this.currentPage - 1);
+        }
+      }
+      
+      updateNavigation() {
+        this.prevBtn.disabled = this.currentPage === 0;
+        this.nextBtn.disabled = this.currentPage === this.totalPages - 1;
+        this.pageInfo.textContent = `${this.currentPage + 1} из ${this.totalPages}`;
+      }
+      
+      async downloadPDF() {
+        // Показываем все страницы для генерации PDF
+        const originalDisplay = [];
+        this.pages.forEach((page, index) => {
+          originalDisplay[index] = page.style.display;
+          page.style.display = 'block';
+          page.classList.remove('active');
+        });
+        
+        // Скрываем навигацию
+        document.querySelector('.navigation').style.display = 'none';
+        document.querySelector('.home-btn').style.display = 'none';
+        document.querySelector('.download-btn').style.display = 'none';
+        
+        try {
+          // Используем современный API для печати
+          const printContent = document.documentElement.outerHTML;
+          const printWindow = window.open('', '_blank');
+          printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Саня спасает белочку - PDF</title>
+              <style>
+                @page { margin: 1cm; size: A4; }
+                body { font-family: Arial, sans-serif; }
+                .page { page-break-after: always; padding: 20px; }
+                .page:last-child { page-break-after: avoid; }
+                .navigation, .home-btn, .download-btn { display: none !important; }
+                .book-container { max-width: none; margin: 0; padding: 0; }
+                .book-wrapper { box-shadow: none; }
+              </style>
+            </head>
+            <body>${document.querySelector('.book-container').outerHTML}</body>
+            </html>
+          `);
+          printWindow.document.close();
+          printWindow.focus();
+          printWindow.print();
+          printWindow.close();
+        } catch (error) {
+          alert('Ошибка при создании PDF. Пожалуйста, попробуйте ещё раз.');
+        }
+        
+        // Восстанавливаем исходное состояние
+        this.pages.forEach((page, index) => {
+          page.style.display = originalDisplay[index];
+          if (index === this.currentPage) page.classList.add('active');
+        });
+        
+        document.querySelector('.navigation').style.display = 'flex';
+        document.querySelector('.home-btn').style.display = 'flex';
+        document.querySelector('.download-btn').style.display = 'flex';
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      new BookReader();
+    });
+  </script>
+</body>
+</html>
