@@ -1901,6 +1901,139 @@ p {
 }
 
 /* ========================================
+   LAPTOP/NOTEBOOK RESPONSIVE FIXES
+   ======================================== */
+
+/* Ноутбуки 1366x768 и аналогичные */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .hero-container {
+    grid-template-columns: 1fr 350px;
+    gap: var(--space-xl);
+    padding: var(--space-xl) var(--space-lg);
+    min-height: 400px;
+  }
+  
+  .hero-slider {
+    height: 320px;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-xl);
+  }
+  
+  .character-image {
+    height: 260px;
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+  }
+  
+  .gallery-slide img {
+    height: 350px;
+  }
+  
+  .coloring-item img {
+    height: 280px;
+  }
+  
+  .contacts-grid {
+    gap: var(--space-xl);
+  }
+  
+  .team-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+/* Средние ноутбуки */
+@media (min-width: 1200px) and (max-width: 1366px) {
+  .content {
+    padding: var(--space-lg) min(3vw, var(--space-xl));
+  }
+  
+  .hero-container {
+    padding: var(--space-xl) var(--space-lg);
+  }
+  
+  .section-header {
+    margin-bottom: var(--space-xl);
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+/* Устройства со средней шириной (планшеты в landscape) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .hero-container {
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    min-height: 350px;
+  }
+  
+  .hero-slider {
+    height: 280px;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr 250px;
+    gap: var(--space-lg);
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .contacts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+/* Исправление overflow для всех контейнеров */
+@media (min-width: 768px) {
+  .hero-container,
+  .gallery-container,
+  .coloring-container {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .gallery-track,
+  .coloring-track {
+    max-width: 100%;
+  }
+  
+  .coloring-slide {
+    padding: 0 var(--space-md);
+  }
+  
+  .section {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+/* ========================================
    ACCESSIBILITY
    ======================================== */
 
