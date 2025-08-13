@@ -351,7 +351,7 @@
           <h1 class="book-title">Саня и чистая полянка</h1>
           <p class="book-subtitle">История о заботе о природе и трудолюбии</p>
         </div>
-        <div class="illustration">🌲🗑️♻️</div>
+                  <div class="illustration">[Изображение: Сказочный лес с полянкой, где живёт Саня - добрый пенёк]</div>
         <div class="page-number">1</div>
       </div>
 
@@ -364,7 +364,7 @@
             Он любил утренние походы — в это время лес просыпался, 
             и можно было услышать пение птиц и шорох листьев.
           </p>
-          <div class="illustration">🌅🌲🎵</div>
+          <div class="illustration">[Изображение: Утро в лесу, Саня просыпается под пение птиц]</div>
           <p class="story-text">
             Саня шёл по знакомой тропинке, которая вела к его любимой полянке. 
             Там обычно собирались все лесные друзья, чтобы поиграть, 
@@ -383,7 +383,7 @@
             фантики от конфет и даже старые газеты были разбросаны 
             по всей красивой полянке.
           </p>
-          <div class="illustration">😢🗑️💔</div>
+          <div class="illustration">[Изображение: Саня-пенёк расстроен, видя мусор на полянке]</div>
           <p class="story-text">
             "Ой, нет! — расстроился Саня. — Кто же мог оставить здесь столько мусора? 
             Наша красивая полянка стала такой грязной!" 
@@ -401,7 +401,7 @@
             Белочка Рыжик ахнула от удивления, енот Полосатик покачал головой, 
             а ёжик Колючка даже всплеснул лапками.
           </p>
-          <div class="illustration">🐿️🦝🦔</div>
+          <div class="illustration">[Изображение: Лесные друзья Сани - белочка, енот и ёжик]</div>
           <p class="story-text">
             "Вчера здесь отдыхали люди, — объяснила белочка. — 
             Они жарили шашлыки, играли в мяч, веселились. А когда уходили, 
@@ -422,7 +422,7 @@
             "Что же нам делать? — спросил ёжик Колючка. — 
             Мы же не можем играть на такой грязной полянке!"
           </p>
-          <div class="illustration">🤔💭</div>
+          <div class="illustration">[Изображение: Саня думает над планом очистки полянки]</div>
           <p class="story-text">
             Саня задумался. Он был очень трудолюбивым и никогда не отступал 
             перед трудностями. "А давайте уберём мусор сами! — предложил он. — 
@@ -481,7 +481,7 @@
             Друзья работали не покладая рук, поддерживая друг друга. 
             Когда кто-то уставал, остальные подбадривали его.
           </p>
-          <div class="illustration">✨🌟</div>
+          <div class="illustration">[Изображение: Саня работает, убирая мусор с полянки]</div>
           <p class="story-text">
             "Смотрите, как здорово получается! — радовался Саня. — 
             Мы почти закончили!" И правда, мусора оставалось совсем немного. 
@@ -499,7 +499,7 @@
             туда, где его потом заберут специальные службы. 
             Полянка снова сияла чистотой!
           </p>
-          <div class="illustration">🌈✨🌸</div>
+          <div class="illustration">[Изображение: Полянка снова красивая и чистая, с радугой и цветами]</div>
           <p class="story-text">
             "Какая красота! — восхитилась белочка. — 
             Полянка стала ещё прекраснее, чем была!"
@@ -521,7 +521,7 @@
             "Знаете что, друзья, — сказал он, — а давайте поставим здесь 
             красивую табличку, чтобы все знали, как важно беречь природу!"
           </p>
-          <div class="illustration">📋🌱</div>
+          <div class="illustration">[Изображение: Саня составляет правила для защиты природы]</div>
           <p class="story-text">
             Енот Полосатик нашёл подходящий кусочек коры, 
             а Саня написал на нём: "Берегите лес! 
@@ -540,7 +540,7 @@
             и обязательно убирали за собой мусор. 
             А некоторые даже благодарили лесных друзей!
           </p>
-          <div class="illustration">👨‍👩‍👧‍👦🌳💚</div>
+          <div class="illustration">[Изображение: Семья людей учится у Сани беречь природу]</div>
           <p class="story-text">
             Саня понял очень важную вещь: даже если проблема кажется большой, 
             её можно решить, если работать дружно и не сдаваться. 
@@ -562,7 +562,7 @@
               ✨ Даже маленькие дела могут принести большую пользу
             </p>
           </div>
-          <div class="illustration">🌟📖💝</div>
+          <div class="illustration">[Изображение: Прекрасный финал истории о защите природы]</div>
           <p class="story-text large">
             Конец истории
           </p>
@@ -652,7 +652,7 @@
       }
       
       async downloadPDF() {
-        // Показываем все страницы для генерации PDF
+        // Создаём временный контейнер для PDF
         const originalDisplay = [];
         this.pages.forEach((page, index) => {
           originalDisplay[index] = page.style.display;
@@ -660,40 +660,133 @@
           page.classList.remove('active');
         });
         
-        // Скрываем навигацию
-        document.querySelector('.navigation').style.display = 'none';
-        document.querySelector('.home-btn').style.display = 'none';
-        document.querySelector('.download-btn').style.display = 'none';
+        // Скрываем элементы навигации
+        const navigation = document.querySelector('.navigation');
+        const homeBtn = document.querySelector('.home-btn');
+        const downloadBtn = document.querySelector('.download-btn');
         
-        try {
-          // Используем современный API для печати
-          const printContent = document.documentElement.outerHTML;
-          const printWindow = window.open('', '_blank');
-          printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <title>Саня и чистая полянка - PDF</title>
-              <style>
-                @page { margin: 1cm; size: A4; }
-                body { font-family: Arial, sans-serif; }
-                .page { page-break-after: always; padding: 20px; }
-                .page:last-child { page-break-after: avoid; }
-                .navigation, .home-btn, .download-btn { display: none !important; }
-                .book-container { max-width: none; margin: 0; padding: 0; }
-                .book-wrapper { box-shadow: none; }
-              </style>
-            </head>
-            <body>${document.querySelector('.book-container').outerHTML}</body>
-            </html>
-          `);
-          printWindow.document.close();
-          printWindow.focus();
-          printWindow.print();
-          printWindow.close();
-        } catch (error) {
-          alert('Ошибка при создании PDF. Пожалуйста, попробуйте ещё раз.');
-        }
+        navigation.style.display = 'none';
+        homeBtn.style.display = 'none';
+        downloadBtn.style.display = 'none';
+        
+        // Создаём HTML для PDF
+        const pdfContent = `
+          <!DOCTYPE html>
+          <html lang="ru">
+          <head>
+            <meta charset="utf-8">
+            <title>Саня и чистая полянка</title>
+            <style>
+              @page { 
+                margin: 2cm; 
+                size: A4; 
+              }
+              body { 
+                font-family: "Arial", sans-serif; 
+                margin: 0; 
+                padding: 0;
+                line-height: 1.4;
+              }
+              .page { 
+                page-break-after: always; 
+                padding: 20px;
+                min-height: 25cm;
+                display: block !important;
+              }
+              .page:last-child { 
+                page-break-after: avoid; 
+              }
+              .page-header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding: 20px;
+                background: #f0f7f3;
+                border-radius: 12px;
+                border: 2px solid #2f7a5c;
+              }
+              .book-title {
+                font-size: 28px;
+                color: #2f7a5c;
+                margin: 0 0 10px;
+                font-weight: bold;
+              }
+              .book-subtitle {
+                font-size: 16px;
+                color: #ff8a3d;
+                margin: 0;
+                font-weight: 600;
+              }
+              .story-text {
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+                text-align: justify;
+              }
+              .story-text.large {
+                font-size: 20px;
+                text-align: center;
+                margin: 30px 0;
+                font-weight: 600;
+                color: #2f7a5c;
+              }
+              .illustration {
+                width: 100%;
+                height: 150px;
+                background: #f0f7f3;
+                border: 2px solid #2f7a5c;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                color: #5a6b63;
+                margin: 20px 0;
+                font-style: italic;
+              }
+              .page-number {
+                position: absolute;
+                bottom: 1cm;
+                right: 2cm;
+                font-size: 14px;
+                color: #5a6b63;
+              }
+              .moral-box {
+                background: #f0f7f3;
+                border: 2px solid #2f7a5c;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+                text-align: center;
+              }
+              .moral-title {
+                color: #2f7a5c;
+                font-size: 16px;
+                margin: 0 0 10px;
+                font-weight: bold;
+              }
+              .moral-text {
+                font-size: 14px;
+                line-height: 1.5;
+                margin: 0;
+              }
+            </style>
+          </head>
+          <body>
+            ${document.querySelector('.book-container').innerHTML}
+          </body>
+          </html>
+        `;
+        
+        // Создаём и скачиваем файл
+        const blob = new Blob([pdfContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'sanya-clean-glade.html';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
         
         // Восстанавливаем исходное состояние
         this.pages.forEach((page, index) => {
@@ -701,9 +794,11 @@
           if (index === this.currentPage) page.classList.add('active');
         });
         
-        document.querySelector('.navigation').style.display = 'flex';
-        document.querySelector('.home-btn').style.display = 'flex';
-        document.querySelector('.download-btn').style.display = 'flex';
+        navigation.style.display = 'flex';
+        homeBtn.style.display = 'flex';
+        downloadBtn.style.display = 'flex';
+        
+        alert('Книга готова для скачивания! Откройте скачанный файл в браузере и используйте функцию печати для создания PDF.');
       }
     }
     

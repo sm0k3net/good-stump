@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Саня и волшебный сад</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2f7a5c;
+      --accent: #ff8a3d;
+      --bg: #f0f7f3;
+      --text: #2d3748;
+      --light: #e8f4f1;
+      --radius: 12px;
+      --shadow: 0 10px 30px rgba(47,122,92,0.15);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Comfortaa", cursive;
+      background: linear-gradient(135deg, var(--bg) 0%, #e0f2e8 100%);
+      min-height: 100vh;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .home-btn:hover {
+      background: #1e5a43;
+      transform: translateY(-2px);
+    }
+    
+    .download-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .download-btn:hover {
+      background: #e67e22;
+      transform: translateY(-2px);
+    }
+    
+    .book-container {
+      max-width: 800px;
+      margin: 80px auto 40px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .book-wrapper {
+      position: relative;
+      min-height: 600px;
+    }
+    
+    .book-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(47,122,92,.08), rgba(255,138,61,.06));
+      border-radius: var(--radius);
+      border: 2px solid rgba(47,122,92,.1);
+    }
+    
+    .book-title {
+      font-family: "Comfortaa", cursive;
+      font-size: clamp(28px, 5vw, 42px);
+      color: var(--primary);
+      margin: 0 0 15px;
+      text-shadow: 0 2px 4px rgba(47,122,92,0.1);
+    }
+    
+    .book-subtitle {
+      font-size: clamp(16px, 3vw, 20px);
+      color: var(--accent);
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .page {
+      display: none;
+      padding: 40px;
+      min-height: 500px;
+      position: relative;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.6s ease;
+    }
+    
+    .page.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .story-text {
+      font-size: clamp(16px, 2.5vw, 24px);
+      line-height: 1.8;
+      margin-bottom: 25px;
+      text-align: justify;
+      color: var(--text);
+      font-weight: 400;
+    }
+    
+    .story-text.large {
+      font-size: clamp(20px, 3vw, 32px);
+      text-align: center;
+      margin: 40px 0;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .illustration {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, var(--light), #f8fbf9);
+      border: 3px solid var(--primary);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(14px, 2vw, 18px);
+      color: var(--primary);
+      margin: 30px 0;
+      font-style: italic;
+      font-weight: 500;
+      text-align: center;
+      padding: 20px;
+      background-image: radial-gradient(circle at 20% 80%, rgba(47,122,92,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,138,61,0.1) 0%, transparent 50%);
+    }
+    
+    .page-number {
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      font-size: 16px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .navigation {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 100;
+    }
+    
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    
+    .nav-btn:hover:not(:disabled) {
+      background: #1e5a43;
+      transform: translateY(-2px);
+    }
+    
+    .nav-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .moral-box {
+      background: linear-gradient(135deg, var(--light), #f8fbf9);
+      border: 3px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(47,122,92,0.1);
+    }
+    
+    .moral-title {
+      color: var(--primary);
+      font-size: clamp(18px, 2.5vw, 24px);
+      margin: 0 0 15px;
+      font-weight: 700;
+    }
+    
+    .moral-text {
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      .page {
+        padding: 20px;
+      }
+      
+      .home-btn, .download-btn {
+        top: 10px;
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+      
+      .home-btn {
+        left: 10px;
+      }
+      
+      .download-btn {
+        right: 10px;
+      }
+      
+      .book-container {
+        margin: 60px auto 20px;
+      }
+      
+      .illustration {
+        height: 120px;
+        margin: 20px 0;
+        padding: 15px;
+      }
+    }
+    
+    @media print {
+      body { background: white; }
+      .home-btn, .download-btn, .navigation { display: none !important; }
+      .page { 
+        display: block !important; 
+        page-break-after: always; 
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .page:last-child { page-break-after: avoid; }
+      .book-container { 
+        box-shadow: none; 
+        margin: 0;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="home-btn">
+      ← На главную
+    </a>
+    
+    <button class="download-btn" onclick="bookReader.downloadPDF()">
+      📥 Скачать
+    </button>
+    
+    <div class="book-container">
+      <div class="book-wrapper">
+        <!-- Страница 1 -->
+        <div class="page active">
+          <div class="book-header">
+            <h1 class="book-title">Саня и волшебный сад</h1>
+            <p class="book-subtitle">Сказка о том, как доброта помогает расти чудесам</p>
+          </div>
+          <div class="story-text large">
+            Жил-был в густом лесу добрый пенёк по имени Саня. У него было большое сердце и волшебная способность — помогать всему живому расти и цвести.
+          </div>
+          <div class="illustration">[Изображение: Саня-пенёк в лесу среди высоких деревьев и цветов]</div>
+          <div class="page-number">1</div>
+        </div>
+        
+        <!-- Страница 2 -->
+        <div class="page">
+          <div class="story-text">
+            Однажды утром Саня услышал тихий плач. Это была маленькая девочка по имени Лиза. Она сидела рядом с засохшими грядками и горько плакала.
+          </div>
+          <div class="story-text">
+            "Что случилось, малышка?" — спросил Саня своим мягким голосом.
+          </div>
+          <div class="illustration">[Изображение: Девочка Лиза плачет рядом с засохшим огородом]</div>
+          <div class="page-number">2</div>
+        </div>
+        
+        <!-- Страница 3 -->
+        <div class="page">
+          <div class="story-text">
+            "Мой дедушка заболел, и некому стало ухаживать за его садом, — объяснила Лиза. — Все растения засохли, а я не знаю, как их спасти."
+          </div>
+          <div class="story-text">
+            Саня внимательно посмотрел на грядки. Действительно, растения выглядели очень грустно.
+          </div>
+          <div class="illustration">[Изображение: Саня рассматривает засохшие растения в огороде]</div>
+          <div class="page-number">3</div>
+        </div>
+        
+        <!-- Страница 4 -->
+        <div class="page">
+          <div class="story-text">
+            "Не переживай, — сказал Саня с улыбкой. — Я знаю секрет! Растения нуждаются не только в воде и солнце, но и в любви и заботе."
+          </div>
+          <div class="story-text">
+            "Но как показать растениям любовь?" — удивилась Лиза.
+          </div>
+          <div class="illustration">[Изображение: Саня объясняет Лизе секреты ухода за растениями]</div>
+          <div class="page-number">4</div>
+        </div>
+        
+        <!-- Страница 5 -->
+        <div class="page">
+          <div class="story-text">
+            "Очень просто! — ответил Саня. — Нужно поливать их с добрыми мыслями, разговаривать с ними ласково и верить, что они обязательно оживут."
+          </div>
+          <div class="story-text">
+            Лиза взяла лейку и начала поливать растения, тихо напевая им песенку.
+          </div>
+          <div class="illustration">[Изображение: Лиза поливает растения и поёт им песенку]</div>
+          <div class="page-number">5</div>
+        </div>
+        
+        <!-- Страница 6 -->
+        <div class="page">
+          <div class="story-text">
+            Саня тоже помогал — он посылал растениям свою волшебную энергию доброты. Его корни тянулись глубоко в землю и делились питательными веществами с увядшими растениями.
+          </div>
+          <div class="illustration">[Изображение: Саня делится своей энергией с растениями через корни]</div>
+          <div class="page-number">6</div>
+        </div>
+        
+        <!-- Страница 7 -->
+        <div class="page">
+          <div class="story-text">
+            День за днём Лиза приходила в сад. Она поливала, рыхлила землю, убирала сорняки и всегда разговаривала с растениями как с друзьями.
+          </div>
+          <div class="story-text">
+            "Растите, мои дорогие! Дедушка скоро поправится и будет так рад вас видеть!"
+          </div>
+          <div class="illustration">[Изображение: Лиза ухаживает за садом каждый день]</div>
+          <div class="page-number">7</div>
+        </div>
+        
+        <!-- Страница 8 -->
+        <div class="page">
+          <div class="story-text">
+            И вот произошло чудо! Сначала появились маленькие зелёные ростки, потом листочки, а затем яркие цветы и сочные плоды.
+          </div>
+          <div class="story-text">
+            Сад ожил и стал ещё красивее, чем раньше!
+          </div>
+          <div class="illustration">[Изображение: Сад полный ярких цветов и сочных овощей]</div>
+          <div class="page-number">8</div>
+        </div>
+        
+        <!-- Страница 9 -->
+        <div class="page">
+          <div class="story-text">
+            Дедушка Лизы поправился и очень удивился, увидев свой прекрасный сад. "Как же это возможно?" — спрашивал он.
+          </div>
+          <div class="story-text">
+            "Это волшебство любви и заботы, дедушка!" — радостно ответила Лиза.
+          </div>
+          <div class="illustration">[Изображение: Дедушка и Лиза любуются прекрасным садом]</div>
+          <div class="page-number">9</div>
+        </div>
+        
+        <!-- Страница 10 -->
+        <div class="page">
+          <div class="story-text">
+            С тех пор Лиза и её дедушка каждый день ухаживали за садом вместе. А Саня стал их лучшим другом и мудрым советчиком.
+          </div>
+          <div class="story-text">
+            Соседи приходили учиться у них секретам садоводства.
+          </div>
+          <div class="illustration">[Изображение: Семья и соседи работают в саду вместе с Саней]</div>
+          <div class="page-number">10</div>
+        </div>
+        
+        <!-- Страница 11 -->
+        <div class="page">
+          <div class="story-text">
+            Сад стал местом, где собирались все жители деревни. Они обменивались семенами, делились урожаем и радовались успехам друг друга.
+          </div>
+          <div class="illustration">[Изображение: Деревенские жители собираются в волшебном саду]</div>
+          <div class="page-number">11</div>
+        </div>
+        
+        <!-- Страница 12 -->
+        <div class="page">
+          <div class="moral-box">
+            <h3 class="moral-title">Мудрость от Сани</h3>
+            <p class="moral-text">
+              Любое дело, сделанное с любовью и заботой, обязательно принесёт прекрасные плоды. 
+              Терпение и доброта творят настоящие чудеса — нужно только верить и не сдаваться!
+            </p>
+          </div>
+          <div class="illustration">[Изображение: Саня улыбается среди цветущего сада, полного жизни]</div>
+          <div class="page-number">12</div>
+        </div>
+        
+        <div class="navigation">
+          <button class="nav-btn" onclick="bookReader.prevPage()">← Назад</button>
+          <button class="nav-btn" onclick="bookReader.nextPage()">Вперёд →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class BookReader {
+      constructor() {
+        this.pages = document.querySelectorAll('.page');
+        this.currentPage = 0;
+        this.totalPages = this.pages.length;
+        this.updateNavigation();
+      }
+      
+      showPage(pageIndex) {
+        this.pages.forEach((page, index) => {
+          page.classList.toggle('active', index === pageIndex);
+        });
+        this.updateNavigation();
+      }
+      
+      nextPage() {
+        if (this.currentPage < this.totalPages - 1) {
+          this.currentPage++;
+          this.showPage(this.currentPage);
+        }
+      }
+      
+      prevPage() {
+        if (this.currentPage > 0) {
+          this.currentPage--;
+          this.showPage(this.currentPage);
+        }
+      }
+      
+      updateNavigation() {
+        const prevBtn = document.querySelector('.nav-btn');
+        const nextBtn = document.querySelector('.nav-btn:last-child');
+        
+        if (prevBtn) prevBtn.disabled = this.currentPage === 0;
+        if (nextBtn) nextBtn.disabled = this.currentPage === this.totalPages - 1;
+      }
+      
+      async downloadPDF() {
+        // Создаём временный контейнер для PDF
+        const originalDisplay = [];
+        this.pages.forEach((page, index) => {
+          originalDisplay[index] = page.style.display;
+          page.style.display = 'block';
+          page.classList.remove('active');
+        });
+        
+        // Скрываем элементы навигации
+        const navigation = document.querySelector('.navigation');
+        const homeBtn = document.querySelector('.home-btn');
+        const downloadBtn = document.querySelector('.download-btn');
+        
+        navigation.style.display = 'none';
+        homeBtn.style.display = 'none';
+        downloadBtn.style.display = 'none';
+        
+        // Создаём HTML для PDF
+        const pdfContent = `
+          <!DOCTYPE html>
+          <html lang="ru">
+          <head>
+            <meta charset="utf-8">
+            <title>Саня и волшебный сад</title>
+            <style>
+              @page { 
+                margin: 2cm; 
+                size: A4; 
+              }
+              body { 
+                font-family: "Arial", sans-serif; 
+                margin: 0; 
+                padding: 0;
+                line-height: 1.4;
+              }
+              .page { 
+                page-break-after: always; 
+                padding: 20px;
+                min-height: 25cm;
+                display: block !important;
+              }
+              .page:last-child { 
+                page-break-after: avoid; 
+              }
+              .page-header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding: 20px;
+                background: #f0f7f3;
+                border-radius: 12px;
+                border: 2px solid #2f7a5c;
+              }
+              .book-title {
+                font-size: 28px;
+                color: #2f7a5c;
+                margin: 0 0 10px;
+                font-weight: bold;
+              }
+              .book-subtitle {
+                font-size: 16px;
+                color: #ff8a3d;
+                margin: 0;
+                font-weight: 600;
+              }
+              .story-text {
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+                text-align: justify;
+              }
+              .story-text.large {
+                font-size: 20px;
+                text-align: center;
+                margin: 30px 0;
+                font-weight: 600;
+                color: #2f7a5c;
+              }
+              .illustration {
+                width: 100%;
+                height: 150px;
+                background: #f0f7f3;
+                border: 2px solid #2f7a5c;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                color: #5a6b63;
+                margin: 20px 0;
+                font-style: italic;
+              }
+              .page-number {
+                position: absolute;
+                bottom: 1cm;
+                right: 2cm;
+                font-size: 14px;
+                color: #5a6b63;
+              }
+              .moral-box {
+                background: #f0f7f3;
+                border: 2px solid #2f7a5c;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+                text-align: center;
+              }
+              .moral-title {
+                color: #2f7a5c;
+                font-size: 16px;
+                margin: 0 0 10px;
+                font-weight: bold;
+              }
+              .moral-text {
+                font-size: 14px;
+                line-height: 1.5;
+                margin: 0;
+              }
+            </style>
+          </head>
+          <body>
+            ${document.querySelector('.book-container').innerHTML}
+          </body>
+          </html>
+        `;
+        
+        // Создаём и скачиваем файл
+        const blob = new Blob([pdfContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'sanya-magic-garden.html';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        // Восстанавливаем исходное состояние
+        this.pages.forEach((page, index) => {
+          page.style.display = originalDisplay[index];
+          if (index === this.currentPage) page.classList.add('active');
+        });
+        
+        navigation.style.display = 'flex';
+        homeBtn.style.display = 'flex';
+        downloadBtn.style.display = 'flex';
+        
+        alert('Книга готова для скачивания! Откройте скачанный файл в браузере и используйте функцию печати для создания PDF.');
+      }
+    }
+    
+    // Инициализация при загрузке страницы
+    const bookReader = new BookReader();
+    
+    // Обработка клавиш
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') bookReader.prevPage();
+      if (e.key === 'ArrowRight') bookReader.nextPage();
+    });
+  </script>
+</body>
+</html>
